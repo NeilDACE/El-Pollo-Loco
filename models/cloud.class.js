@@ -1,7 +1,7 @@
 class Cloud extends MovableObject {
   width = 500;
   height = 250;
-  speed = 1;
+  speed = 0.5;
   IMAGES_CLOUDS = [
     "img/5_background/layers/4_clouds/1.png",
     "img/5_background/layers/4_clouds/2.png",
@@ -20,7 +20,9 @@ class Cloud extends MovableObject {
     let offset = Math.random() * 1000;
     let baseY = 35 + Math.random() * 30;
     let floatSpeed = 0.005 + Math.random() * 0.01;
-    this.moveLeft();
+    setInterval(() => {
+      this.moveLeft();
+    }, 1000 / 60);
     setInterval(() => {
       if (this.x < -this.width) {
         this.x = 3000;

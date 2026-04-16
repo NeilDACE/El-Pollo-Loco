@@ -11,16 +11,16 @@ function init() {
 }
 
 window.addEventListener("keydown", (e) => {
-  if (e.key == "ArrowLeft") {
+  if (e.key == "ArrowLeft" || e.key == "a") {
     keyboard.LEFT = true;
   }
-  if (e.key == "ArrowRight") {
+  if (e.key == "ArrowRight" || e.key == "d") {
     keyboard.RIGHT = true;
   }
-  if (e.key == "ArrowUp") {
+  if (e.key == "ArrowUp" || e.key == "w") {
     keyboard.UP = true;
   }
-  if (e.key == "ArrowDown") {
+  if (e.key == "ArrowDown" || e.key == "s") {
     keyboard.DOWN = true;
   }
   if (e.key == " ") {
@@ -29,16 +29,16 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
-  if (e.key == "ArrowLeft") {
+  if (e.key == "ArrowLeft" || e.key == "a") {
     keyboard.LEFT = false;
   }
-  if (e.key == "ArrowRight") {
+  if (e.key == "ArrowRight" || e.key == "d") {
     keyboard.RIGHT = false;
   }
-  if (e.key == "ArrowUp") {
+  if (e.key == "ArrowUp" || e.key == "w") {
     keyboard.UP = false;
   }
-  if (e.key == "ArrowDown") {
+  if (e.key == "ArrowDown" || e.key == "s") {
     keyboard.DOWN = false;
   }
   if (e.key == " ") {
