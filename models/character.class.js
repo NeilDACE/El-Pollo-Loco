@@ -2,7 +2,9 @@ class Character extends MovableObject {
   height = 300;
   width = 152.5;
   y = 130;
-  speed = 6;
+  speed = 5;
+  coinCounter = 0;
+  bottleCounter = 0;
 
   offset = {
     top: 130,
@@ -67,6 +69,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.animate();
     this.applyGravity();
+    this.coinCounter = 0;
   }
 
   animate() {
@@ -86,10 +89,10 @@ class Character extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.isHurt()) {
-        this.playAnimation(this.IMAGES_HURT);
-      } else if (this.isDead()) {
+      if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
+      } else if (this.isHurt()) {
+        this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
       } else {

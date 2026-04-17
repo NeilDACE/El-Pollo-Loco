@@ -1,17 +1,11 @@
-class MovableObject {
-  x = 120;
-  y = 125;
-  img;
-  height = 150;
-  width = 100;
-  imageCache = {};
-  currentImage = 0;
+class MovableObject extends DrawableObject {
   speed = 0.15;
   speedY = 0;
-  acceleration = 1;
+  acceleration = 2;
   otherDirection = false;
   energy = 100;
   lastHit = 0;
+  animationFrameCount = 0;
 
   offset = {
     top: 0,
@@ -33,35 +27,6 @@ class MovableObject {
     return this.y < 130;
   }
 
-  loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
-  }
-
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  }
-
-  drawFrame(ctx) {
-    if (
-      this instanceof Character ||
-      this instanceof Chicken ||
-      this instanceof SmallChicken ||
-      this instanceof Endboss
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = "1";
-      ctx.strokeStyle = "red";
-      ctx.rect(
-        this.x + this.offset.left,
-        this.y + this.offset.top,
-        this.width - this.offset.left - this.offset.right,
-        this.height - this.offset.top - this.offset.bottom,
-      );
-      ctx.stroke();
-    }
-  }
-
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -69,6 +34,13 @@ class MovableObject {
       this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
       this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     );
+  }
+
+  playAnimation(images) {
+    let i = this.currentImage % images.length;
+    let path = images[i];
+    this.img = this.imageCache[path];
+    this.currentImage++;
   }
 
   isHurt() {
@@ -80,14 +52,6 @@ class MovableObject {
     return this.energy == 0;
   }
 
-  loadImages(arr) {
-    arr.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
-  }
-
   moveRight() {
     this.x += this.speed;
     this.otherDirection = false;
@@ -95,13 +59,6 @@ class MovableObject {
 
   moveLeft() {
     this.x -= this.speed;
-  }
-
-  playAnimation(images) {
-    let i = this.currentImage % images.length;
-    let path = images[i];
-    this.img = this.imageCache[path];
-    this.currentImage++;
   }
 
   jump() {
@@ -112,8 +69,6 @@ class MovableObject {
     if (this.energy > 0) {
       this.energy -= 5;
       this.lastHit = new Date().getTime();
-      console.log("Hit! Energy: " + this.energy);
-      console.log("Last hit: " + this.lastHit);
     }
   }
 }

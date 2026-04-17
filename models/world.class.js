@@ -1,5 +1,9 @@
 class World {
   character = new Character();
+  statusBarHealth = new StatusBarHealth();
+  statusBarCoin = new StatusBarCoin();
+  statusBarBottle = new StatusBarBottle();
+  statusBarEndboss = new StatusBarEndboss();
   level = level1;
   ctx;
   canvas;
@@ -12,22 +16,54 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-    this.checkCollisions();
+    this.runCollisionChecks();
   }
 
   setWorld() {
     this.character.world = this;
   }
 
-  checkCollisions() {
+  runCollisionChecks() {
     setInterval(() => {
-      this.level.enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-          console.log("Collision with " + enemy);
-          this.character.hit();
-        }
-      });
+      this.checkEnemyCollisions();
+      this.level.coins = this.checkAndRemoveCollisions(this.level.coins, () =>
+        this.onCollisionWithCoin(),
+      );
+      this.level.bottles = this.checkAndRemoveCollisions(
+        this.level.bottles,
+        () => this.onCollisionWithBottle(),
+      );
     }, 200);
+  }
+
+  checkEnemyCollisions() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        this.statusBarHealth.setPercentage(this.character.energy);
+      }
+    });
+  }
+
+  checkAndRemoveCollisions(array, onCollision) {
+    const remainingItems = array.filter((item) => {
+      if (this.character.isColliding(item)) {
+        onCollision();
+        return false;
+      }
+      return true;
+    });
+    return remainingItems;
+  }
+
+  onCollisionWithCoin() {
+    this.character.coinCounter += 20;
+    this.statusBarCoin.setPercentage(this.character.coinCounter);
+  }
+
+  onCollisionWithBottle() {
+    this.character.bottleCounter += 20;
+    this.statusBarBottle.setPercentage(this.character.bottleCounter);
   }
 
   draw() {
@@ -36,7 +72,15 @@ class World {
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.enemies);
+    this.ctx.translate(-this.kamera_x, 0);
+    //Space for fixed objects like status bar
+    this.addToMap(this.statusBarCoin);
+    this.addToMap(this.statusBarHealth);
+    this.addToMap(this.statusBarBottle);
+    this.ctx.translate(this.kamera_x, 0);
     this.ctx.translate(-this.kamera_x, 0);
 
     requestAnimationFrame(() => this.draw());

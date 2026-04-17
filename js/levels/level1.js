@@ -17,6 +17,17 @@ const level1 = new Level(
     new Cloud(0, 3000),
   ],
   [
+    new Coin(400, 100),
+    new Coin(800, 100),
+    new Coin(1200, 100),
+    new Coin(1600, 100),
+    new Coin(2000, 100),
+    new Coin(2400, 100),
+    new Coin(2800, 100),
+    new Coin(3200, 100),
+  ],
+  [new Bottle(500), new Bottle(1000), new Bottle(1500), new Bottle(2000)],
+  [
     new backgroundObject("img/5_background/layers/air.png", 0),
     new backgroundObject("img/5_background/layers/3_third_layer/1.png", 0),
     new backgroundObject("img/5_background/layers/2_second_layer/1.png", 0),
