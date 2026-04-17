@@ -22,7 +22,8 @@ class SmallChicken extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
+      this.animationFrameCount++;
+      this.playAnimationWithRate(this.IMAGES_WALKING, 2);
     }, 100);
   }
 }

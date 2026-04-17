@@ -1,7 +1,7 @@
 class MovableObject extends DrawableObject {
   speed = 0.15;
   speedY = 0;
-  acceleration = 2;
+  acceleration = 1.6;
   otherDirection = false;
   energy = 100;
   lastHit = 0;
@@ -36,11 +36,13 @@ class MovableObject extends DrawableObject {
     );
   }
 
-  playAnimation(images) {
-    let i = this.currentImage % images.length;
-    let path = images[i];
-    this.img = this.imageCache[path];
-    this.currentImage++;
+  playAnimationWithRate(images, rate) {
+    if (this.animationFrameCount % rate === 0) {
+      let i = this.currentImage % images.length;
+      let path = images[i];
+      this.img = this.imageCache[path];
+      this.currentImage++;
+    }
   }
 
   isHurt() {
