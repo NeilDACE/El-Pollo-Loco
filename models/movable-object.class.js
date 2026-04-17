@@ -45,6 +45,26 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  playStateAnimation(nextState, nextImages, nextRate) {
+    if (this.currentState !== nextState) {
+      this.currentState = nextState;
+      this.currentImage = 0;
+      this.animationFrameCount = 0;
+    }
+    this.playAnimationWithRate(nextImages, nextRate);
+  }
+
+  playDeadAnimation() {
+    if (this.currentState !== "dead") {
+      this.currentState = "dead";
+      this.currentImage = 0;
+      this.animationFrameCount = 0;
+    }
+    if (this.currentImage < this.IMAGES_DEAD.length) {
+      this.playAnimationWithRate(this.IMAGES_DEAD, 3);
+    } else return;
+  }
+
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
     return timePassed < 500;

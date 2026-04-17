@@ -75,6 +75,7 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
+      if (this.isDead()) return;
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
       }
@@ -95,15 +96,8 @@ class Character extends MovableObject {
       let nextRate;
       let nextState;
       if (this.isDead()) {
-        nextState = "dead";
-        if (this.currentState !== nextState) {
-          this.currentState = nextState;
-          this.currentImage = 0;
-          this.animationFrameCount = 0;
-        }
-        if (this.currentImage < this.IMAGES_DEAD.length) {
-          this.playAnimationWithRate(this.IMAGES_DEAD, 3);
-        } else return;
+        this.playDeadAnimation();
+        return;
       } else if (this.isHurt()) {
         nextImages = this.IMAGES_HURT;
         nextRate = 1;
@@ -121,12 +115,7 @@ class Character extends MovableObject {
         nextRate = 5;
         nextState = "idle";
       }
-      if (this.currentState !== nextState) {
-        this.currentState = nextState;
-        this.currentImage = 0;
-        this.animationFrameCount = 0;
-      }
-      this.playAnimationWithRate(nextImages, nextRate);
+      this.playStateAnimation(nextState, nextImages, nextRate);
     }, 60);
   }
 }
