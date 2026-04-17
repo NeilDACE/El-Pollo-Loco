@@ -84,10 +84,7 @@ class Character extends MovableObject {
       }
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-      }
-      if (this.isThrown()) {
-        return;
-      } else if (this.world.keyboard.ENTER) {
+      } else if (this.world.keyboard.ENTER && !this.isThrown()) {
         let bottle = new ThrowableBottle(this.x + 100, this.y + 100);
         this.world.throwableObjects.push(bottle);
         this.lastThrow = new Date().getTime();
