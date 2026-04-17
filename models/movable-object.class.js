@@ -1,10 +1,12 @@
 class MovableObject extends DrawableObject {
   speed = 0.15;
   speedY = 0;
+  speedX = 0;
   acceleration = 1.6;
   otherDirection = false;
   energy = 100;
   lastHit = 0;
+  lastThrow = 0;
   animationFrameCount = 0;
 
   offset = {
@@ -15,16 +17,17 @@ class MovableObject extends DrawableObject {
   };
 
   applyGravity() {
-    setInterval(() => {
+    let id = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
     }, 1000 / 25);
+    return id;
   }
 
   isAboveGround() {
-    return this.y < 130;
+    return this.y < 430 - this.height;
   }
 
   isColliding(mo) {
@@ -68,6 +71,11 @@ class MovableObject extends DrawableObject {
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
     return timePassed < 500;
+  }
+
+  isThrown() {
+    let timePassed = new Date().getTime() - this.lastThrow;
+    return timePassed < 250;
   }
 
   isDead() {

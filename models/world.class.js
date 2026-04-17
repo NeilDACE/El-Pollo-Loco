@@ -4,6 +4,7 @@ class World {
   statusBarCoin = new StatusBarCoin();
   statusBarBottle = new StatusBarBottle();
   statusBarEndboss = new StatusBarEndboss();
+  throwableObjects = [];
   level = level1;
   ctx;
   canvas;
@@ -71,6 +72,7 @@ class World {
     this.ctx.translate(this.kamera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.throwableObjects);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
