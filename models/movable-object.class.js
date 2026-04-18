@@ -4,9 +4,8 @@ class MovableObject extends DrawableObject {
   speedX = 0;
   acceleration = 1.6;
   otherDirection = false;
-  energy = 100;
+  energy = 5;
   lastHit = 0;
-  lastThrow = 0;
   animationFrameCount = 0;
 
   offset = {

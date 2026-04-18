@@ -3,6 +3,7 @@ class Character extends MovableObject {
   width = 152.5;
   y = 130;
   speed = 5;
+  energy = 100;
   coinCounter = 0;
   bottleCounter = 0;
   currentState = "";

@@ -1,4 +1,6 @@
 class ThrowableObject extends MovableObject {
+  lastThrow = 0;
+  isBroken = false;
   throw(x, y) {
     this.x = x;
     this.y = y;

@@ -27,9 +27,12 @@ class World {
   runCollisionChecks() {
     setInterval(() => {
       this.checkEnemyCollisions();
+      this.checkEnemyCollisionsWithBottle();
+
       this.level.coins = this.checkAndRemoveCollisions(this.level.coins, () =>
         this.onCollisionWithCoin(),
       );
+
       this.level.bottles = this.checkAndRemoveCollisions(
         this.level.bottles,
         () => this.onCollisionWithBottle(),
@@ -39,10 +42,21 @@ class World {
 
   checkEnemyCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+      if (this.character.isColliding(enemy) && !enemy.isDead()) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy);
       }
+    });
+  }
+
+  checkEnemyCollisionsWithBottle() {
+    this.throwableObjects.forEach((bottle) => {
+      this.level.enemies.forEach((enemy) => {
+        if (bottle.isColliding(enemy) && !enemy.isDead() && !bottle.isBroken) {
+          enemy.hit();
+          bottle.isBroken = true;
+        }
+      });
     });
   }
 
