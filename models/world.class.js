@@ -68,6 +68,7 @@ class World {
       }
       return true;
     });
+    console.log(this.character.coinCounter);
     return remainingItems;
   }
 

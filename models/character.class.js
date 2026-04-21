@@ -85,10 +85,16 @@ class Character extends MovableObject {
       }
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-      } else if (this.world.keyboard.ENTER && !this.isThrown()) {
+      } else if (
+        this.world.keyboard.ENTER &&
+        !this.isThrown() &&
+        this.bottleAvailable()
+      ) {
         let bottle = new ThrowableBottle(this.x + 100, this.y + 100);
         this.world.throwableObjects.push(bottle);
         this.lastThrow = new Date().getTime();
+        this.bottleCounter -= 20;
+        this.world.statusBarBottle.setPercentage(this.bottleCounter);
       }
       this.world.kamera_x = -this.x + 100;
     }, 1000 / 60);

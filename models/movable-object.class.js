@@ -86,6 +86,12 @@ class MovableObject extends DrawableObject {
     this.otherDirection = false;
   }
 
+  bottleAvailable() {
+    if (this.bottleCounter > 0) {
+      return true;
+    } else return false;
+  }
+
   moveLeft() {
     this.x -= this.speed;
   }
