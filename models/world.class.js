@@ -95,6 +95,15 @@ class World {
     });
   }
 
+  checkMarketSection() {
+    const marketStart = 719 * 5;
+    const marketEnd = marketStart + 395;
+    return (
+      this.character.x + this.character.width > marketStart &&
+      this.character.x < marketEnd
+    );
+  }
+
   checkAndRemoveCollisions(array, onCollision) {
     const remainingItems = array.filter((item) => {
       if (this.character.isColliding(item)) {

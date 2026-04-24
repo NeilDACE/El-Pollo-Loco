@@ -60,6 +60,7 @@ class Character extends MovableObject {
     "img/2_character_pepe/5_dead/D-57.png",
   ];
   world;
+  buyKeyLocked = false;
 
   constructor() {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
@@ -82,6 +83,19 @@ class Character extends MovableObject {
       if (this.world.keyboard.LEFT && this.x > 102) {
         this.moveLeft();
         this.otherDirection = true;
+      }
+      if (
+        this.world.keyboard.UP &&
+        !this.buyKeyLocked &&
+        !this.isAboveGround() &&
+        this.world.checkMarketSection()
+      ) {
+        this.buyBottle();
+        this.buyKeyLocked = true;
+      }
+
+      if (!this.world.keyboard.UP) {
+        this.buyKeyLocked = false;
       }
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
@@ -126,5 +140,14 @@ class Character extends MovableObject {
       }
       this.playStateAnimation(nextState, nextImages, nextRate);
     }, 60);
+  }
+
+  buyBottle() {
+    if (this.coinCounter >= 2) {
+      this.coinCounter -= 2;
+      this.bottleCounter += 1;
+      this.world.statusCoin.setCount(this.coinCounter);
+      this.world.statusBottle.setCount(this.bottleCounter);
+    }
   }
 }

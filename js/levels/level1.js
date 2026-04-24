@@ -130,6 +130,7 @@ const level1 = new Level(
       "img/5_background/layers/1_first_layer/1.png",
       719 * 6,
     ),
+    new backgroundObject("img/5_background/market.png", 719 * 5, 110, 395, 289),
     new backgroundObject("img/5_background/layers/air.png", 719 * 7),
     new backgroundObject(
       "img/5_background/layers/3_third_layer/2.png",
