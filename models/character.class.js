@@ -93,8 +93,8 @@ class Character extends MovableObject {
         let bottle = new ThrowableBottle(this.x + 100, this.y + 100);
         this.world.throwableObjects.push(bottle);
         this.lastThrow = new Date().getTime();
-        this.bottleCounter -= 20;
-        this.world.statusBarBottle.setPercentage(this.bottleCounter);
+        this.bottleCounter -= 1;
+        this.world.statusBottle.setCount(this.bottleCounter);
       }
       this.world.kamera_x = -this.x + 100;
     }, 1000 / 60);

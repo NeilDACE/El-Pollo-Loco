@@ -1,8 +1,8 @@
 class World {
   character = new Character();
   statusBarHealth = new StatusBarHealth();
-  statusBarCoin = new StatusBarCoin();
-  statusBarBottle = new StatusBarBottle();
+  statusCoin = new StatusCoin();
+  statusBottle = new StatusBottle();
   statusBarEndboss = new StatusBarEndboss();
   throwableObjects = [];
   level = level1;
@@ -22,6 +22,8 @@ class World {
 
   setWorld() {
     this.character.world = this;
+    this.statusCoin.setCount(this.character.coinCounter);
+    this.statusBottle.setCount(this.character.bottleCounter);
   }
 
   runCollisionChecks() {
@@ -105,13 +107,13 @@ class World {
   }
 
   onCollisionWithCoin() {
-    this.character.coinCounter += 20;
-    this.statusBarCoin.setPercentage(this.character.coinCounter);
+    this.character.coinCounter += 1;
+    this.statusCoin.setCount(this.character.coinCounter);
   }
 
   onCollisionWithBottle() {
-    this.character.bottleCounter += 20;
-    this.statusBarBottle.setPercentage(this.character.bottleCounter);
+    this.character.bottleCounter += 1;
+    this.statusBottle.setCount(this.character.bottleCounter);
   }
 
   draw() {
@@ -126,9 +128,9 @@ class World {
     this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.kamera_x, 0);
     //Space for fixed objects like status bar
-    this.addToMap(this.statusBarCoin);
+    this.addToMap(this.statusCoin);
     this.addToMap(this.statusBarHealth);
-    this.addToMap(this.statusBarBottle);
+    this.addToMap(this.statusBottle);
     this.ctx.translate(this.kamera_x, 0);
     this.ctx.translate(-this.kamera_x, 0);
 
