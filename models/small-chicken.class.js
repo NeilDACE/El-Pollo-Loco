@@ -5,6 +5,12 @@ class SmallChicken extends MovableObject {
   y = 420 - this.height;
   speed = 0.15 + Math.random() * 0.25;
   energy = 5;
+  offset = {
+    top: 5,
+    left: 8,
+    right: 5,
+    bottom: 5,
+  };
   IMAGES_WALKING = [
     "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
