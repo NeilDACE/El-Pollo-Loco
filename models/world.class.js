@@ -26,6 +26,7 @@ class World {
 
   runCollisionChecks() {
     setInterval(() => {
+      this.checkCharacterFallingCollisions();
       this.checkEnemyCollisions();
       this.checkEnemyCollisionsWithBottle();
 
@@ -37,23 +38,55 @@ class World {
         this.level.bottles,
         () => this.onCollisionWithBottle(),
       );
-    }, 200);
+    }, 1000 / 60);
   }
 
   checkEnemyCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !enemy.isDead()) {
-        this.character.hit();
-        this.statusBarHealth.setPercentage(this.character.energy);
+      if (
+        this.character.isColliding(enemy) &&
+        !enemy.isDead() &&
+        !this.isStompFromAbove(enemy)
+      ) {
+        if (!this.character.isHurt()) {
+          this.character.hit(20);
+          this.statusBarHealth.setPercentage(this.character.energy);
+        }
       }
     });
+  }
+
+  checkCharacterFallingCollisions() {
+    this.level.enemies.forEach((enemy) => {
+      if (
+        this.character.isColliding(enemy) &&
+        !enemy.isDead() &&
+        this.isStompFromAbove(enemy)
+      ) {
+        enemy.hit(5);
+        this.character.speedY = 10;
+      }
+    });
+  }
+
+  isStompFromAbove(enemy) {
+    if (!(enemy instanceof SmallChicken)) {
+      return false;
+    }
+
+    const tolerance = 20;
+    const characterBottom =
+      this.character.y + this.character.height - this.character.offset.bottom;
+    const enemyTop = enemy.y + enemy.offset.top;
+
+    return this.character.speedY < 0 && characterBottom <= enemyTop + tolerance;
   }
 
   checkEnemyCollisionsWithBottle() {
     this.throwableObjects.forEach((bottle) => {
       this.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy) && !enemy.isDead() && !bottle.isBroken) {
-          enemy.hit();
+          enemy.hit(10);
           bottle.isBroken = true;
         }
       });
@@ -68,7 +101,6 @@ class World {
       }
       return true;
     });
-    console.log(this.character.coinCounter);
     return remainingItems;
   }
 

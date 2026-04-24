@@ -69,7 +69,7 @@ class MovableObject extends DrawableObject {
 
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
-    return timePassed < 500;
+    return timePassed < 250;
   }
 
   isThrown() {
@@ -79,6 +79,10 @@ class MovableObject extends DrawableObject {
 
   isDead() {
     return this.energy == 0;
+  }
+
+  isFalling() {
+    return this.speedY < 0;
   }
 
   moveRight() {
@@ -100,9 +104,9 @@ class MovableObject extends DrawableObject {
     this.speedY = 20;
   }
 
-  hit() {
+  hit(damage = 5) {
     if (this.energy > 0) {
-      this.energy -= 5;
+      this.energy -= damage;
       this.lastHit = new Date().getTime();
     }
   }
