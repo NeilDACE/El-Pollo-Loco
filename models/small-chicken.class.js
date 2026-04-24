@@ -4,7 +4,7 @@ class SmallChicken extends MovableObject {
   x = 350 + Math.random() * 500;
   y = 420 - this.height;
   speed = 0.15 + Math.random() * 0.25;
-  energy = 5;
+  energy = 10;
   offset = {
     top: 5,
     left: 8,

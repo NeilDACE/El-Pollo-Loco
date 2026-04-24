@@ -65,7 +65,7 @@ class World {
         !enemy.isDead() &&
         this.isStompFromAbove(enemy)
       ) {
-        enemy.hit(5);
+        enemy.hit(10);
         this.character.speedY = 10;
       }
     });

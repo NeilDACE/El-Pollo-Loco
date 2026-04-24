@@ -116,7 +116,7 @@ class MovableObject extends DrawableObject {
     this.speedY = 20;
   }
 
-  hit(damage = 5) {
+  hit(damage = 10) {
     if (this.energy > 0) {
       this.energy -= damage;
       this.lastHit = new Date().getTime();
