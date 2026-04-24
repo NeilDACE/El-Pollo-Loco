@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
   energy = 5;
   lastHit = 0;
   animationFrameCount = 0;
+  groundOffset = 0;
 
   offset = {
     top: 0,
@@ -17,12 +18,13 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
     let id = setInterval(() => {
-      const groundY = 430 - this.height;
+      const groundY = this.getGroundY();
 
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
+
       if (this.y > groundY) {
         this.y = groundY;
         this.speedY = 0;
@@ -31,8 +33,12 @@ class MovableObject extends DrawableObject {
     return id;
   }
 
+  getGroundY() {
+    return 430 - this.height + this.groundOffset;
+  }
+
   isAboveGround() {
-    return this.y < 430 - this.height;
+    return this.y < this.getGroundY();
   }
 
   isColliding(mo) {
