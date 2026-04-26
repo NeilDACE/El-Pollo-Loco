@@ -22,6 +22,9 @@ class World {
 
   setWorld() {
     this.character.world = this;
+    this.level.enemies.forEach((enemy) => {
+      enemy.world = this;
+    });
     this.statusCoin.setCount(this.character.coinCounter);
     this.statusBottle.setCount(this.character.bottleCounter);
   }
