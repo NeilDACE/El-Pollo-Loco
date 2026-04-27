@@ -32,14 +32,19 @@ class ThrowableBottle extends ThrowableObject {
   animate() {
     let animationIntervalID = setInterval(() => {
       this.animationFrameCount++;
-      if (this.isAboveGround()) {
+      if (!this.isBroken && this.isAboveGround()) {
         this.playAnimationWithRate(this.IMAGES_ROTATE, 6);
       } else {
-        this.playAnimationWithRate(this.IMAGES_SPLASH, 1);
-        if (this.currentImage >= this.IMAGES_SPLASH.length) {
+        if (!this.isBroken) {
+          this.break();
+        }
+        this.playAnimationWithRate(this.IMAGES_SPLASH, 2);
+        if (
+          this.isBroken &&
+          this.currentImage >= this.IMAGES_SPLASH.length &&
+          Date.now() - this.brokenAt >= 250
+        ) {
           clearInterval(animationIntervalID);
-          clearInterval(this.gravityInterval);
-          clearInterval(this.moveInterval);
         }
       }
     }, 1000 / 60);

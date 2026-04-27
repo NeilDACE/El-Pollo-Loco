@@ -34,11 +34,10 @@ class World {
       this.checkCharacterFallingCollisions();
       this.checkEnemyCollisions();
       this.checkEnemyCollisionsWithBottle();
-
+      this.removeBrokenBottles();
       this.level.coins = this.checkAndRemoveCollisions(this.level.coins, () =>
         this.onCollisionWithCoin(),
       );
-
       this.level.bottles = this.checkAndRemoveCollisions(
         this.level.bottles,
         () => this.onCollisionWithBottle(),
@@ -92,9 +91,18 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy) && !enemy.isDead() && !bottle.isBroken) {
           enemy.hit(10);
-          bottle.isBroken = true;
+          bottle.break();
         }
       });
+    });
+  }
+
+  removeBrokenBottles() {
+    this.throwableObjects = this.throwableObjects.filter((bottle) => {
+      if (!bottle.isBroken) {
+        return true;
+      }
+      return Date.now() - bottle.brokenAt < 250;
     });
   }
 

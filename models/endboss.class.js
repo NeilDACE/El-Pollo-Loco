@@ -1,8 +1,8 @@
 class Endboss extends MovableObject {
   width = 256;
   height = 304.25;
-  x = 4800;
-  y = 430 - this.height;
+  x = 5200;
+  y = 435 - this.height;
   offset = {
     top: 55,
     left: 20,
@@ -10,8 +10,10 @@ class Endboss extends MovableObject {
     bottom: 15,
   };
   speed = 0.4;
-  energy = 200;
+  energy = 100;
   alertRange = 400;
+  alert = false;
+  walkSpeed = 10;
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -72,7 +74,7 @@ class Endboss extends MovableObject {
         ) <= this.alertRange;
       if (this.isDead()) {
         this.speed = 0;
-        this.playStateAnimation("dead", this.IMAGES_DEAD, 10);
+        this.playDeadAnimation("dead", this.IMAGES_DEAD, 10);
         return;
       }
       if (this.isHurt()) {
@@ -83,12 +85,17 @@ class Endboss extends MovableObject {
         this.playStateAnimation("attack", this.IMAGES_ATTACK, 10);
         return;
       }
-      if (isCharacterInAlertRange) {
-        this.playStateAnimation("alert", this.IMAGES_ALERT, 10);
-      } else {
-        this.moveLeft();
-        this.playStateAnimation("walk", this.IMAGES_WALKING, 10);
+      if (isCharacterInAlertRange && !this.alert) {
+        this.playStateAnimation("alert", this.IMAGES_ALERT, 12);
+        if (this.currentImage >= this.IMAGES_ALERT.length) {
+          this.alert = true;
+          this.speed = 1.5;
+          this.walkSpeed = 6;
+        }
+        return;
       }
+      this.moveLeft();
+      this.playStateAnimation("walk", this.IMAGES_WALKING, this.walkSpeed);
     }, 1000 / 60);
   }
 }
