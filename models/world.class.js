@@ -157,7 +157,9 @@ class World {
     //Space for fixed objects like status bar
     this.addToMap(this.statusCoin);
     this.addToMap(this.statusBarHealth);
-    const endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
+    const endboss = this.level.enemies.find(
+      (enemy) => enemy instanceof Endboss,
+    );
     if (endboss?.alert) {
       this.addToMap(this.statusBarEndboss);
     }
