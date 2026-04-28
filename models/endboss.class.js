@@ -11,7 +11,7 @@ class Endboss extends MovableObject {
   };
   speed = 0.4;
   energy = 100;
-  alertRange = 400;
+  alertRange = 600;
   alert = false;
   walkSpeed = 10;
   IMAGES_WALKING = [

@@ -92,9 +92,16 @@ class World {
         if (bottle.isColliding(enemy) && !enemy.isDead() && !bottle.isBroken) {
           enemy.hit(10);
           bottle.break();
+          this.reduceEndbossHealth(enemy);
         }
       });
     });
+  }
+
+  reduceEndbossHealth(enemy) {
+    if (enemy instanceof Endboss) {
+      this.statusBarEndboss.setPercentage(enemy.energy);
+    }
   }
 
   removeBrokenBottles() {
@@ -150,6 +157,10 @@ class World {
     //Space for fixed objects like status bar
     this.addToMap(this.statusCoin);
     this.addToMap(this.statusBarHealth);
+    const endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
+    if (endboss?.alert) {
+      this.addToMap(this.statusBarEndboss);
+    }
     this.addToMap(this.statusBottle);
     this.ctx.translate(this.kamera_x, 0);
     this.ctx.translate(-this.kamera_x, 0);

@@ -8,6 +8,8 @@ class MovableObject extends DrawableObject {
   lastHit = 0;
   animationFrameCount = 0;
   groundOffset = 0;
+  ignoreGroundCollision = false;
+  ignoreCollisions = false;
 
   offset = {
     top: 0,
@@ -20,12 +22,16 @@ class MovableObject extends DrawableObject {
     let id = setInterval(() => {
       const groundY = this.getGroundY();
 
-      if (this.isAboveGround() || this.speedY > 0) {
+      if (
+        this.isAboveGround() ||
+        this.speedY > 0 ||
+        this.ignoreGroundCollision
+      ) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
 
-      if (this.y > groundY) {
+      if (!this.ignoreGroundCollision && this.y > groundY) {
         this.y = groundY;
         this.speedY = 0;
       }
@@ -42,6 +48,9 @@ class MovableObject extends DrawableObject {
   }
 
   isColliding(mo) {
+    if (this.ignoreCollisions || mo.ignoreCollisions) {
+      return false;
+    }
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
       this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
