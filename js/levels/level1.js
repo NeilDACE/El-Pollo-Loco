@@ -170,5 +170,12 @@ const level1 = new Level(
       "img/5_background/layers/1_first_layer/2.png",
       719 * 7,
     ),
+    new backgroundObject(
+      "img/5_background/restaurant-finish.png",
+      4800,
+      0,
+      622,
+      460,
+    ),
   ],
 );
