@@ -124,12 +124,10 @@ class World {
     if (!(enemy instanceof SmallChicken)) {
       return false;
     }
-
     const tolerance = 20;
     const characterBottom =
       this.character.y + this.character.height - this.character.offset.bottom;
     const enemyTop = enemy.y + enemy.offset.top;
-
     return this.character.speedY < 0 && characterBottom <= enemyTop + tolerance;
   }
 
@@ -201,6 +199,13 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawScrollableObjects();
+    this.drawFixedObjects();
+    this.drawEndScreen();
+    requestAnimationFrame(() => this.draw());
+  }
+
+  drawScrollableObjects() {
     this.ctx.translate(this.kamera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
@@ -210,22 +215,29 @@ class World {
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.kamera_x, 0);
-    //Space for fixed objects like status bar
+  }
+
+  drawFixedObjects() {
     this.addToMap(this.statusCoin);
     this.addToMap(this.statusBarHealth);
-    const endboss = this.level.enemies.find(
-      (enemy) => enemy instanceof Endboss,
-    );
-    if (endboss?.alert && !endboss.isDead()) {
+    if (this.shouldDrawEndbossBar()) {
       this.addToMap(this.statusBarEndboss);
     }
     this.addToMap(this.statusBottle);
     this.ctx.translate(this.kamera_x, 0);
     this.ctx.translate(-this.kamera_x, 0);
-    if (this.gameEnded) {
-      this.addToMap(this.endScreen);
-    }
-    requestAnimationFrame(() => this.draw());
+  }
+
+  shouldDrawEndbossBar() {
+    const endboss = this.level.enemies.find(
+      (enemy) => enemy instanceof Endboss,
+    );
+    return endboss?.alert && !endboss.isDead();
+  }
+
+  drawEndScreen() {
+    if (!this.gameEnded) return;
+    this.addToMap(this.endScreen);
   }
 
   addObjectsToMap(objects) {

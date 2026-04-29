@@ -32,21 +32,30 @@ class ThrowableBottle extends ThrowableObject {
   animate() {
     const animationIntervalID = this.setStopableInterval(() => {
       this.animationFrameCount++;
-      if (!this.isBroken && this.isAboveGround()) {
-        this.playAnimationWithRate(this.IMAGES_ROTATE, 6);
-      } else {
-        if (!this.isBroken) {
-          this.break();
-        }
-        this.playAnimationWithRate(this.IMAGES_SPLASH, 2);
-        if (
-          this.isBroken &&
-          this.currentImage >= this.IMAGES_SPLASH.length &&
-          Date.now() - this.brokenAt >= 250
-        ) {
-          this.clearIntervalById(animationIntervalID);
-        }
-      }
+      if (this.shouldRotate()) return this.handleRotate();
+      this.handleSplash(animationIntervalID);
     }, 1000 / 60);
+  }
+
+  shouldRotate() {
+    return !this.isBroken && this.isAboveGround();
+  }
+
+  handleRotate() {
+    this.playAnimationWithRate(this.IMAGES_ROTATE, 6);
+  }
+
+  handleSplash(animationIntervalID) {
+    if (!this.isBroken) this.break();
+    this.playAnimationWithRate(this.IMAGES_SPLASH, 2);
+    if (this.isSplashFinished()) this.clearIntervalById(animationIntervalID);
+  }
+
+  isSplashFinished() {
+    return (
+      this.isBroken &&
+      this.currentImage >= this.IMAGES_SPLASH.length &&
+      Date.now() - this.brokenAt >= 250
+    );
   }
 }

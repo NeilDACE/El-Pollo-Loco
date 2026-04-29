@@ -42,7 +42,6 @@ class MovableObject extends DrawableObject {
   applyGravity() {
     return this.setStopableInterval(() => {
       const groundY = this.getGroundY();
-
       if (
         this.isAboveGround() ||
         this.speedY > 0 ||
@@ -51,7 +50,6 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-
       if (!this.ignoreGroundCollision && this.y > groundY) {
         this.y = groundY;
         this.speedY = 0;

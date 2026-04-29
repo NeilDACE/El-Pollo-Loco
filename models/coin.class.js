@@ -13,18 +13,27 @@ class Coin extends MovableObject {
   }
 
   animate() {
-    let angle = 0;
-    const originalWidth = this.width;
-    const centerX = this.x + originalWidth / 2;
+    this.spinAngle = 0;
+    this.originalWidth = this.width;
+    this.centerX = this.x + this.originalWidth / 2;
+    this.startSpinAnimation();
+  }
 
+  startSpinAnimation() {
     this.setStopableInterval(() => {
-      let rotation = Math.cos(angle);
-      let flattenedRotation =
-        Math.sign(rotation) * Math.pow(Math.abs(rotation), 0.4);
-      this.width = Math.max(originalWidth * Math.abs(flattenedRotation), 15);
-      this.x = centerX - this.width / 2;
+      const rotation = Math.cos(this.spinAngle);
+      const flattenedRotation = this.getFlattenedRotation(rotation);
+      this.width = Math.max(
+        this.originalWidth * Math.abs(flattenedRotation),
+        15,
+      );
+      this.x = this.centerX - this.width / 2;
       this.otherDirection = rotation < 0;
-      angle += 0.06;
+      this.spinAngle += 0.06;
     }, 1000 / 60);
+  }
+
+  getFlattenedRotation(rotation) {
+    return Math.sign(rotation) * Math.pow(Math.abs(rotation), 0.4);
   }
 }

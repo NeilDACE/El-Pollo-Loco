@@ -90,91 +90,119 @@ class Character extends MovableObject {
   }
 
   animate() {
+    this.movement();
+    this.animation();
+  }
+
+  movement() {
     this.setStopableInterval(() => {
-      if (this.isDead() || this.world.checkFinishSection()) return;
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.moveRight();
-      }
-      if (this.world.keyboard.LEFT && this.x > 102) {
+      if (this.cantMove()) return;
+      if (this.canMoveRight()) this.moveRight();
+      if (this.canMoveLeft()) {
         this.moveLeft();
         this.otherDirection = true;
       }
-      if (
-        this.world.keyboard.UP &&
-        !this.buyKeyLocked &&
-        !this.isAboveGround() &&
-        this.world.checkMarketSection()
-      ) {
-        this.buyBottle();
-        this.buyKeyLocked = true;
-      }
-      if (!this.world.keyboard.UP) {
-        this.buyKeyLocked = false;
-      }
-      if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-        this.jump();
-      } else if (
-        this.world.keyboard.ENTER &&
-        !this.isThrown() &&
-        this.bottleAvailable()
-      ) {
-        let bottle = new ThrowableBottle(this.x + 100, this.y + 100);
-        this.world.throwableObjects.push(bottle);
-        this.lastThrow = new Date().getTime();
-        this.bottleCounter -= 1;
-        this.world.statusBottle.setCount(this.bottleCounter);
-      }
+      if (this.canBuy()) this.buy();
+      if (!this.world.keyboard.UP) this.buyKeyLocked = false;
+      if (this.canJump()) this.jump();
+      if (this.canThrow()) this.throw();
       this.world.kamera_x = -this.x + 100;
     }, 1000 / 60);
+  }
 
+  canMoveRight() {
+    return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
+  }
+
+  canMoveLeft() {
+    return this.world.keyboard.LEFT && this.x > 102;
+  }
+
+  canBuy() {
+    return (
+      this.world.keyboard.UP &&
+      !this.buyKeyLocked &&
+      !this.isAboveGround() &&
+      this.world.checkMarketSection()
+    );
+  }
+
+  canJump() {
+    return this.world.keyboard.SPACE && !this.isAboveGround();
+  }
+
+  canThrow() {
+    return (
+      this.world.keyboard.ENTER && !this.isThrown() && this.bottleAvailable()
+    );
+  }
+
+  throw() {
+    let bottle = new ThrowableBottle(this.x + 100, this.y + 100);
+    this.world.throwableObjects.push(bottle);
+    this.lastThrow = new Date().getTime();
+    this.bottleCounter -= 1;
+    this.world.statusBottle.setCount(this.bottleCounter);
+  }
+
+  buy() {
+    this.buyBottle();
+    this.buyKeyLocked = true;
+  }
+
+  cantMove() {
+    return this.isDead() || this.world.checkFinishSection();
+  }
+
+  animation() {
     this.setStopableInterval(() => {
       this.animationFrameCount++;
-      const isInFinishSection = this.world.checkFinishSection() === true;
-      let nextImages;
-      let nextRate;
-      let nextState;
       if (this.isDead()) {
-        this.idleStartedAt = null;
-        if (!this.deathJumpDone) {
-          this.jump();
-          this.ignoreGroundCollision = true;
-          this.ignoreCollisions = true;
-          this.deathJumpDone = true;
-        }
-        this.playDeadAnimation();
+        this.handleDeadAnimation();
         return;
-      } else if (isInFinishSection) {
-        this.idleStartedAt = null;
-        nextImages = this.IMAGES_IDLE_LONG;
-        nextRate = 5;
-        nextState = "idle_long";
-      } else if (this.isHurt()) {
-        this.idleStartedAt = null;
-        nextImages = this.IMAGES_HURT;
-        nextRate = 1;
-        nextState = "hurt";
-      } else if (this.isAboveGround() || this.world.keyboard.SPACE) {
-        this.idleStartedAt = null;
-        nextImages = this.IMAGES_JUMPING;
-        nextRate = 2;
-        nextState = "jump";
-      } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        this.idleStartedAt = null;
-        nextImages = this.IMAGES_WALKING;
-        nextRate = 2;
-        nextState = "walk";
-      } else {
-        if (this.idleStartedAt === null) {
-          this.idleStartedAt = Date.now();
-        }
-        const idleDuration = Date.now() - this.idleStartedAt;
-        nextImages =
-          idleDuration >= 15000 ? this.IMAGES_IDLE_LONG : this.IMAGES_IDLE;
-        nextRate = 5;
-        nextState = idleDuration >= 15000 ? "idle_long" : "idle";
       }
+      const { nextState, nextImages, nextRate } = this.getNextAnimationState();
       this.playStateAnimation(nextState, nextImages, nextRate);
     }, 60);
+  }
+
+  handleDeadAnimation() {
+    this.idleStartedAt = null;
+    if (!this.deathJumpDone) {
+      this.jump();
+      this.ignoreGroundCollision = true;
+      this.ignoreCollisions = true;
+      this.deathJumpDone = true;
+    }
+    this.playDeadAnimation();
+  }
+
+  getNextAnimationState() {
+    if (this.world.checkFinishSection())
+      return this.animState("idle_long", this.IMAGES_IDLE_LONG, 5);
+    if (this.isHurt()) return this.animState("hurt", this.IMAGES_HURT, 1);
+    if (this.isAboveGround() || this.world.keyboard.SPACE)
+      return this.animState("jump", this.IMAGES_JUMPING, 2);
+    if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)
+      return this.animState("walk", this.IMAGES_WALKING, 2);
+    return this.getIdleState();
+  }
+
+  animState(nextState, nextImages, nextRate) {
+    this.idleStartedAt = null;
+    return { nextState, nextImages, nextRate };
+  }
+
+  getIdleState() {
+    if (this.idleStartedAt === null) {
+      this.idleStartedAt = Date.now();
+    }
+    const isLongIdle = Date.now() - this.idleStartedAt >= 15000;
+    return {
+      nextState: isLongIdle ? "idle_long" : "idle",
+      nextImages: isLongIdle ? this.IMAGES_IDLE_LONG : this.IMAGES_IDLE,
+      nextRate: 5,
+    };
   }
 
   buyBottle() {

@@ -17,23 +17,34 @@ class Cloud extends MovableObject {
   }
 
   animate() {
-    let offset = Math.random() * 1000;
-    let baseY = 35 + Math.random() * 30;
-    let floatSpeed = 0.005 + Math.random() * 0.01;
+    this.floatOffset = Math.random() * 1000;
+    this.baseY = 35 + Math.random() * 30;
+    this.floatSpeed = 0.005 + Math.random() * 0.01;
+    this.startMovement();
+    this.startResetCheck();
+    this.startFloating();
+  }
+
+  startMovement() {
     this.setStopableInterval(() => {
       this.moveLeft();
     }, 1000 / 60);
+  }
+
+  startResetCheck() {
     this.setStopableInterval(() => {
       if (this.x < -this.width) {
         this.x = 7000;
-        baseY = 35 + Math.random() * 30;
-        floatSpeed = 0.005 + Math.random() * 0.01;
+        this.baseY = 35 + Math.random() * 30;
+        this.floatSpeed = 0.005 + Math.random() * 0.01;
       }
     }, 400);
+  }
 
+  startFloating() {
     this.setStopableInterval(() => {
-      offset += floatSpeed;
-      this.y = baseY + Math.sin(offset) * 8;
+      this.floatOffset += this.floatSpeed;
+      this.y = this.baseY + Math.sin(this.floatOffset) * 8;
     }, 1000 / 60);
   }
 }

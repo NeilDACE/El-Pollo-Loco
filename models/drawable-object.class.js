@@ -42,23 +42,30 @@ class DrawableObject {
   }
 
   drawFrame(ctx) {
-    if (
+    if (!this.isDebugFrameTarget()) return;
+    this.drawCollisionBox(ctx);
+  }
+
+  isDebugFrameTarget() {
+    return (
       this instanceof Character ||
       this instanceof ThrowableBottle ||
       this instanceof Chicken ||
       this instanceof SmallChicken ||
       this instanceof Endboss
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = "1";
-      ctx.strokeStyle = "red";
-      ctx.rect(
-        this.x + this.offset.left,
-        this.y + this.offset.top,
-        this.width - this.offset.left - this.offset.right,
-        this.height - this.offset.top - this.offset.bottom,
-      );
-      ctx.stroke();
-    }
+    );
+  }
+
+  drawCollisionBox(ctx) {
+    ctx.beginPath();
+    ctx.lineWidth = "1";
+    ctx.strokeStyle = "red";
+    ctx.rect(
+      this.x + this.offset.left,
+      this.y + this.offset.top,
+      this.width - this.offset.left - this.offset.right,
+      this.height - this.offset.top - this.offset.bottom,
+    );
+    ctx.stroke();
   }
 }

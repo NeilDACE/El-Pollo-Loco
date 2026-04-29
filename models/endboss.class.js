@@ -66,39 +66,51 @@ class Endboss extends MovableObject {
     this.setStopableInterval(() => {
       this.animationFrameCount++;
       const character = this.world?.character;
-      const isCollidingWithCharacter =
-        !!character && this.isColliding(character);
-      const isCharacterInAlertRange =
-        !!character &&
-        Math.abs(
-          this.x + this.width / 2 - (character.x + character.width / 2),
-        ) <= this.alertRange;
-      if (this.isDead()) {
-        this.speed = 0;
-        this.ignoreGroundCollision = true;
-        this.ignoreCollisions = true;
-        this.playDeadAnimation("dead", this.IMAGES_DEAD, 10);
-        return;
-      }
-      if (this.isHurt()) {
-        this.playStateAnimation("hurt", this.IMAGES_HURT, 10);
-        return;
-      }
-      if (isCollidingWithCharacter) {
-        this.playStateAnimation("attack", this.IMAGES_ATTACK, 10);
-        return;
-      }
-      if (isCharacterInAlertRange && !this.alert) {
-        this.playStateAnimation("alert", this.IMAGES_ALERT, 12);
-        if (this.currentImage >= this.IMAGES_ALERT.length) {
-          this.alert = true;
-          this.speed = 1.5;
-          this.walkSpeed = 6;
-        }
-        return;
-      }
-      this.moveLeft();
-      this.playStateAnimation("walk", this.IMAGES_WALKING, this.walkSpeed);
+      if (this.isDead()) return this.handleDeadState();
+      if (this.isHurt()) return this.handleHurtState();
+      if (this.isCollidingWithCharacter(character))
+        return this.handleAttackState();
+      if (this.shouldAlert(character)) return this.handleAlertState();
+      this.handleWalkState();
     }, 1000 / 60);
+  }
+
+  isCollidingWithCharacter(character) {
+    return !!character && this.isColliding(character);
+  }
+
+  shouldAlert(character) {
+    if (!character || this.alert) return false;
+    const bossCenter = this.x + this.width / 2;
+    const charCenter = character.x + character.width / 2;
+    return Math.abs(bossCenter - charCenter) <= this.alertRange;
+  }
+
+  handleDeadState() {
+    this.speed = 0;
+    this.ignoreGroundCollision = true;
+    this.ignoreCollisions = true;
+    this.playDeadAnimation("dead", this.IMAGES_DEAD, 10);
+  }
+
+  handleHurtState() {
+    this.playStateAnimation("hurt", this.IMAGES_HURT, 10);
+  }
+
+  handleAttackState() {
+    this.playStateAnimation("attack", this.IMAGES_ATTACK, 10);
+  }
+
+  handleAlertState() {
+    this.playStateAnimation("alert", this.IMAGES_ALERT, 12);
+    if (this.currentImage < this.IMAGES_ALERT.length) return;
+    this.alert = true;
+    this.speed = 1.5;
+    this.walkSpeed = 6;
+  }
+
+  handleWalkState() {
+    this.moveLeft();
+    this.playStateAnimation("walk", this.IMAGES_WALKING, this.walkSpeed);
   }
 }
