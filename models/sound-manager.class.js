@@ -6,7 +6,7 @@ class SoundManager {
       bottleSplash: new Audio("audio/splash_sound.mp3"),
       hit: new Audio("audio/hit_sound.mp3"),
       hitChicken: new Audio("audio/hit_normal_chicken_sound.mp3"),
-      hitEndboss: new Audio("audio/hit_boss.mp3"),
+      hitEndboss: new Audio("audio/hit_endboss_sound.mp3"),
       backgroundMusic: new Audio("audio/El_Pollo_Loco_background_level1.mp3"),
       endbossBackgroundMusic: new Audio("audio/endboss_fight_bg_music.mp3"),
       afterEndbossMusic: new Audio("audio/after_endboss_music.mp3"),

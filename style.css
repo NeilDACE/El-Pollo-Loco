@@ -24,6 +24,76 @@ body {
   font-family: "Rye", sans-serif;
 }
 
+section {
+  width: 720px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.landing-page {
+  width: 720px;
+  height: 480px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+p {
+  font-size: large;
+  text-align: center;
+  color: beige;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: large;
+  font-weight: bold;
+  color: black;
+  background-color: rgba(255, 166, 0, 0.8);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+button:hover {
+  background-color: darkorange;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  color: beige;
+}
+
+span {
+  padding-right: 26px;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: orange;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: orange;
+}
+
+a:visited:hover {
+  color: black;
+}
+
 canvas {
   background-color: black;
   border-radius: 10px;

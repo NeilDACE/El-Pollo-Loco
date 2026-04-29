@@ -69,7 +69,32 @@
     <script src="js/game.js" defer></script>
   </head>
   <body onload="init()">
-    <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"> </canvas>
+    <section id="landing-page" class="landing-page">
+      <h1>El Pollo Loco</h1>
+      <p>
+        Was passiert, wenn man nach drei Burritos zu viel im 'El Pollo Loco'
+        einschläft? <br />
+        Richtig: Die Rache der Hühner!<br />
+        Begleite unseren müden Mexikaner durch einen bizarren Traum, in dem das
+        Geflügel nicht auf dem Teller landet, sondern zurückschlägt. Spring,
+        weich aus und verteidige deinen Schlafplatz gegen die pickende Plage. El
+        Pollo Loco: Ein Spiel für alle, die ihre Siesta ernst nehmen.
+      </p>
+      <img src="img/5_background/" alt="" />
+      <button id="start-button" onclick="startGame()">Start Game</button>
+      <button id="show-controls" onclick="showControls()">
+        Show Game Controls
+      </button>
+      <footer>
+        <p>
+          <span>Developed by</span>
+          <a href="https://github.com/NeilDACE" target="_blank">Neil DACE</a>
+        </p>
+        <a href="pages/legal-notice.html" target="_blank">Legal Notice</a>
+      </footer>
+    </section>
+    <section class="game-container" style="display: none">
+      <canvas id="canvas" width="720" height="480"> </canvas>
+    </section>
   </body>
 </html>
