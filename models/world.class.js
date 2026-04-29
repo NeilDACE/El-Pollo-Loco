@@ -122,6 +122,15 @@ class World {
     );
   }
 
+  checkFinishSection() {
+    const finishStart = 5100;
+    const finishEnd = finishStart + 400;
+    return (
+      this.character.x + this.character.width > finishStart &&
+      this.character.x < finishEnd
+    );
+  }
+
   checkAndRemoveCollisions(array, onCollision) {
     const remainingItems = array.filter((item) => {
       if (this.character.isColliding(item)) {
@@ -160,7 +169,7 @@ class World {
     const endboss = this.level.enemies.find(
       (enemy) => enemy instanceof Endboss,
     );
-    if (endboss?.alert) {
+    if (endboss?.alert && !endboss.isDead()) {
       this.addToMap(this.statusBarEndboss);
     }
     this.addToMap(this.statusBottle);

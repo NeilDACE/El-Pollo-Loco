@@ -58,6 +58,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
+    this.applyGravity();
     this.animate();
   }
 
@@ -74,6 +75,8 @@ class Endboss extends MovableObject {
         ) <= this.alertRange;
       if (this.isDead()) {
         this.speed = 0;
+        this.ignoreGroundCollision = true;
+        this.ignoreCollisions = true;
         this.playDeadAnimation("dead", this.IMAGES_DEAD, 10);
         return;
       }

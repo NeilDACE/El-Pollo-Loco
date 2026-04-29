@@ -91,7 +91,7 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
-      if (this.isDead()) return;
+      if (this.isDead() || this.world.checkFinishSection()) return;
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
       }
@@ -129,6 +129,7 @@ class Character extends MovableObject {
 
     setInterval(() => {
       this.animationFrameCount++;
+      const isInFinishSection = this.world.checkFinishSection() === true;
       let nextImages;
       let nextRate;
       let nextState;
@@ -142,6 +143,11 @@ class Character extends MovableObject {
         }
         this.playDeadAnimation();
         return;
+      } else if (isInFinishSection) {
+        this.idleStartedAt = null;
+        nextImages = this.IMAGES_IDLE_LONG;
+        nextRate = 5;
+        nextState = "idle_long";
       } else if (this.isHurt()) {
         this.idleStartedAt = null;
         nextImages = this.IMAGES_HURT;
