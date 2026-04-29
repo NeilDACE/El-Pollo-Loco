@@ -20,10 +20,10 @@ class Cloud extends MovableObject {
     let offset = Math.random() * 1000;
     let baseY = 35 + Math.random() * 30;
     let floatSpeed = 0.005 + Math.random() * 0.01;
-    setInterval(() => {
+    this.setStopableInterval(() => {
       this.moveLeft();
     }, 1000 / 60);
-    setInterval(() => {
+    this.setStopableInterval(() => {
       if (this.x < -this.width) {
         this.x = 7000;
         baseY = 35 + Math.random() * 30;
@@ -31,7 +31,7 @@ class Cloud extends MovableObject {
       }
     }, 400);
 
-    setInterval(() => {
+    this.setStopableInterval(() => {
       offset += floatSpeed;
       this.y = baseY + Math.sin(offset) * 8;
     }, 1000 / 60);

@@ -8,20 +8,37 @@ class DrawableObject {
   currentImage = 0;
 
   loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
+    try {
+      this.img = new Image();
+      this.img.src = path;
+    } catch (error) {
+      console.error("Error loading image:", error, "Path:", path);
+    }
   }
 
   loadImages(arr) {
     arr.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
+      try {
+        let img = new Image();
+        img.src = path;
+        this.imageCache[path] = img;
+      } catch (error) {
+        console.error("Error loading image:", error, "Path:", path);
+      }
     });
   }
 
   draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    try {
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    } catch (error) {
+      console.error(
+        "Error drawing image:",
+        error,
+        "Image source:",
+        this.img?.src,
+      );
+    }
   }
 
   drawFrame(ctx) {

@@ -10,6 +10,7 @@ class MovableObject extends DrawableObject {
   groundOffset = 0;
   ignoreGroundCollision = false;
   ignoreCollisions = false;
+  intervalIds = [];
 
   offset = {
     top: 0,
@@ -18,8 +19,28 @@ class MovableObject extends DrawableObject {
     bottom: 0,
   };
 
+  setStopableInterval(fn, time) {
+    const intervalId = setInterval(fn, time);
+    this.intervalIds.push(intervalId);
+    return intervalId;
+  }
+
+  setStopableIntervals(fn, time) {
+    return this.setStopableInterval(fn, time);
+  }
+
+  clearIntervalById(intervalId) {
+    clearInterval(intervalId);
+    this.intervalIds = this.intervalIds.filter((id) => id !== intervalId);
+  }
+
+  clearIntervals() {
+    this.intervalIds.forEach((intervalId) => clearInterval(intervalId));
+    this.intervalIds = [];
+  }
+
   applyGravity() {
-    let id = setInterval(() => {
+    return this.setStopableInterval(() => {
       const groundY = this.getGroundY();
 
       if (
@@ -36,7 +57,6 @@ class MovableObject extends DrawableObject {
         this.speedY = 0;
       }
     }, 1000 / 25);
-    return id;
   }
 
   getGroundY() {

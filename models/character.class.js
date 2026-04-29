@@ -90,7 +90,7 @@ class Character extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.setStopableInterval(() => {
       if (this.isDead() || this.world.checkFinishSection()) return;
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
@@ -127,7 +127,7 @@ class Character extends MovableObject {
       this.world.kamera_x = -this.x + 100;
     }, 1000 / 60);
 
-    setInterval(() => {
+    this.setStopableInterval(() => {
       this.animationFrameCount++;
       const isInFinishSection = this.world.checkFinishSection() === true;
       let nextImages;

@@ -17,7 +17,7 @@ class Coin extends MovableObject {
     const originalWidth = this.width;
     const centerX = this.x + originalWidth / 2;
 
-    setInterval(() => {
+    this.setStopableInterval(() => {
       let rotation = Math.cos(angle);
       let flattenedRotation =
         Math.sign(rotation) * Math.pow(Math.abs(rotation), 0.4);

@@ -8,8 +8,8 @@ class ThrowableObject extends MovableObject {
     this.y = y;
     this.speedX = 10;
     this.speedY = 20;
-    this.gravityInterval = this.applyGravity();
-    this.moveInterval = setInterval(() => {
+    this.gravityIntervalId = this.applyGravity();
+    this.moveIntervalId = this.setStopableInterval(() => {
       this.x += this.speedX;
     }, 1000 / 25);
   }
@@ -22,7 +22,7 @@ class ThrowableObject extends MovableObject {
     this.brokenAt = Date.now();
     this.currentImage = 0;
     this.animationFrameCount = 0;
-    clearInterval(this.gravityInterval);
-    clearInterval(this.moveInterval);
+    this.clearIntervalById(this.gravityIntervalId);
+    this.clearIntervalById(this.moveIntervalId);
   }
 }

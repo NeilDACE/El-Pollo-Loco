@@ -27,7 +27,7 @@ class Chicken extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.setStopableInterval(() => {
       this.animationFrameCount++;
       if (this.isDead()) {
         this.speed = 0;

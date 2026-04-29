@@ -63,7 +63,7 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.setStopableInterval(() => {
       this.animationFrameCount++;
       const character = this.world?.character;
       const isCollidingWithCharacter =

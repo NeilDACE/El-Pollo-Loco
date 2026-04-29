@@ -30,7 +30,7 @@ class ThrowableBottle extends ThrowableObject {
   }
 
   animate() {
-    let animationIntervalID = setInterval(() => {
+    const animationIntervalID = this.setStopableInterval(() => {
       this.animationFrameCount++;
       if (!this.isBroken && this.isAboveGround()) {
         this.playAnimationWithRate(this.IMAGES_ROTATE, 6);
@@ -44,7 +44,7 @@ class ThrowableBottle extends ThrowableObject {
           this.currentImage >= this.IMAGES_SPLASH.length &&
           Date.now() - this.brokenAt >= 250
         ) {
-          clearInterval(animationIntervalID);
+          this.clearIntervalById(animationIntervalID);
         }
       }
     }, 1000 / 60);

@@ -5,6 +5,7 @@ class World {
   statusBottle = new StatusBottle();
   statusBarEndboss = new StatusBarEndboss();
   throwableObjects = [];
+  intervalIdsWorld = [];
   level = level1;
   ctx;
   canvas;
@@ -20,6 +21,11 @@ class World {
     this.runCollisionChecks();
   }
 
+  setStopableIntervals(fn, time) {
+    const intervalId = setInterval(fn, time);
+    this.intervalIdsWorld.push(intervalId);
+  }
+
   setWorld() {
     this.character.world = this;
     this.level.enemies.forEach((enemy) => {
@@ -30,7 +36,7 @@ class World {
   }
 
   runCollisionChecks() {
-    setInterval(() => {
+    this.setStopableIntervals(() => {
       this.checkCharacterFallingCollisions();
       this.checkEnemyCollisions();
       this.checkEnemyCollisionsWithBottle();

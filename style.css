@@ -21,7 +21,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  font-family: "Rye";
+  font-family: "Rye", sans-serif;
 }
 
 canvas {
