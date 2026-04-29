@@ -6,6 +6,8 @@ class World {
   statusBarEndboss = new StatusBarEndboss();
   throwableObjects = [];
   intervalIdsWorld = [];
+  gameEnded = false;
+  endScreen = null;
   level = level1;
   ctx;
   canvas;
@@ -26,6 +28,30 @@ class World {
     this.intervalIdsWorld.push(intervalId);
   }
 
+  clearAllGameIntervals() {
+    this.intervalIdsWorld.forEach((id) => clearInterval(id));
+    this.intervalIdsWorld = [];
+    this.character.clearIntervals();
+    this.level.enemies.forEach((enemy) => enemy.clearIntervals());
+    this.level.coins.forEach((coin) => coin.clearIntervals());
+    this.level.bottles.forEach((bottle) => bottle.clearIntervals());
+    this.level.backgroundObjects.forEach((bg) => {
+      if (bg.clearIntervals) {
+        bg.clearIntervals();
+      }
+    });
+    this.level.clouds.forEach((cloud) => cloud.clearIntervals());
+    this.throwableObjects.forEach((bottle) => bottle.clearIntervals());
+  }
+
+  endGame(didWin) {
+    this.gameEnded = true;
+    const imagePath = didWin
+      ? "img/9_intro_outro_screens/you win!.png"
+      : "img/9_intro_outro_screens/game_over/game over!.png";
+    this.endScreen = new EndScreen(imagePath);
+  }
+
   setWorld() {
     this.character.world = this;
     this.level.enemies.forEach((enemy) => {
@@ -37,6 +63,8 @@ class World {
 
   runCollisionChecks() {
     this.setStopableIntervals(() => {
+      if (this.gameEnded) return;
+      this.checkGameEnd();
       this.checkCharacterFallingCollisions();
       this.checkEnemyCollisions();
       this.checkEnemyCollisionsWithBottle();
@@ -49,6 +77,19 @@ class World {
         () => this.onCollisionWithBottle(),
       );
     }, 1000 / 60);
+  }
+
+  checkGameEnd() {
+    if (this.character.isDead()) {
+      this.endGame(false);
+      return;
+    }
+    const endboss = this.level.enemies.find(
+      (enemy) => enemy instanceof Endboss,
+    );
+    if (endboss && endboss.isDead() && this.checkFinishSection()) {
+      this.endGame(true);
+    }
   }
 
   checkEnemyCollisions() {
@@ -181,7 +222,9 @@ class World {
     this.addToMap(this.statusBottle);
     this.ctx.translate(this.kamera_x, 0);
     this.ctx.translate(-this.kamera_x, 0);
-
+    if (this.gameEnded) {
+      this.addToMap(this.endScreen);
+    }
     requestAnimationFrame(() => this.draw());
   }
 
