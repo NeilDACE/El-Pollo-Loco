@@ -13,6 +13,7 @@ class World {
   canvas;
   keyboard;
   kamera_x = 0;
+  soundManager = new SoundManager();
 
   constructor(canvas, keyboard) {
     this.canvas = canvas;
@@ -64,6 +65,7 @@ class World {
   runCollisionChecks() {
     this.setStopableIntervals(() => {
       if (this.gameEnded) return;
+      this.updateBossBackgroundMusic();
       this.checkGameEnd();
       this.checkCharacterFallingCollisions();
       this.checkEnemyCollisions();
@@ -82,14 +84,32 @@ class World {
   checkGameEnd() {
     if (this.character.isDead()) {
       this.endGame(false);
+      this.soundManager.stopAll();
+      this.soundManager.play("gameOver");
       return;
     }
-    const endboss = this.level.enemies.find(
-      (enemy) => enemy instanceof Endboss,
-    );
+    const endboss = this.getEndboss();
     if (endboss && endboss.isDead() && this.checkFinishSection()) {
       this.endGame(true);
+      this.soundManager.stopAll();
+      this.soundManager.play("win");
     }
+  }
+
+  updateBossBackgroundMusic() {
+    const endboss = this.getEndboss();
+    if (!endboss) return;
+    if (endboss.isDead()) {
+      this.soundManager.playAfterEndbossMusic();
+      return;
+    }
+    if (endboss.alert) {
+      this.soundManager.playEndbossBackgroundMusic();
+    }
+  }
+
+  getEndboss() {
+    return this.level.enemies.find((enemy) => enemy instanceof Endboss);
   }
 
   checkEnemyCollisions() {
@@ -102,6 +122,7 @@ class World {
         if (!this.character.isHurt()) {
           this.character.hit(20);
           this.statusBarHealth.setPercentage(this.character.energy);
+          this.soundManager.play("hit");
         }
       }
     });
@@ -115,6 +136,7 @@ class World {
         this.isStompFromAbove(enemy)
       ) {
         enemy.hit(10);
+        this.soundManager.play("hitChicken");
         this.character.speedY = 10;
       }
     });
@@ -146,6 +168,9 @@ class World {
   reduceEndbossHealth(enemy) {
     if (enemy instanceof Endboss) {
       this.statusBarEndboss.setPercentage(enemy.energy);
+      this.soundManager.play("hitEndboss");
+    } else {
+      this.soundManager.play("hitChicken");
     }
   }
 
@@ -190,11 +215,13 @@ class World {
   onCollisionWithCoin() {
     this.character.coinCounter += 1;
     this.statusCoin.setCount(this.character.coinCounter);
+    this.soundManager.play("coin");
   }
 
   onCollisionWithBottle() {
     this.character.bottleCounter += 1;
     this.statusBottle.setCount(this.character.bottleCounter);
+    this.soundManager.play("bottle");
   }
 
   draw() {
@@ -229,9 +256,7 @@ class World {
   }
 
   shouldDrawEndbossBar() {
-    const endboss = this.level.enemies.find(
-      (enemy) => enemy instanceof Endboss,
-    );
+    const endboss = this.getEndboss();
     return endboss?.alert && !endboss.isDead();
   }
 

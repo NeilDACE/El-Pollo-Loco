@@ -19,6 +19,9 @@ class ThrowableObject extends MovableObject {
       return;
     }
     this.isBroken = true;
+    if (this.world?.soundManager) {
+      this.world.soundManager.play("bottleSplash");
+    }
     this.brokenAt = Date.now();
     this.currentImage = 0;
     this.animationFrameCount = 0;

@@ -97,7 +97,9 @@ class Character extends MovableObject {
   movement() {
     this.setStopableInterval(() => {
       if (this.cantMove()) return;
-      if (this.canMoveRight()) this.moveRight();
+      if (this.canMoveRight()) {
+        this.moveRight();
+      }
       if (this.canMoveLeft()) {
         this.moveLeft();
         this.otherDirection = true;
@@ -139,6 +141,7 @@ class Character extends MovableObject {
 
   throw() {
     let bottle = new ThrowableBottle(this.x + 100, this.y + 100);
+    bottle.world = this.world;
     this.world.throwableObjects.push(bottle);
     this.lastThrow = new Date().getTime();
     this.bottleCounter -= 1;
@@ -209,6 +212,7 @@ class Character extends MovableObject {
     if (this.coinCounter >= 2) {
       this.coinCounter -= 2;
       this.bottleCounter += 1;
+      this.world.soundManager.play("buy");
       this.world.statusCoin.setCount(this.coinCounter);
       this.world.statusBottle.setCount(this.bottleCounter);
     }
