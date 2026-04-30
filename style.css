@@ -8,6 +8,11 @@ h1 {
   color: orange;
 }
 
+h2 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
 body {
   height: 100dvh;
   display: flex;
@@ -22,6 +27,15 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   font-family: "Rye", sans-serif;
+}
+
+.game-container {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.game-container.is-visible {
+  opacity: 1;
 }
 
 section {
@@ -39,6 +53,25 @@ section {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 8px;
   border-radius: 8px;
+}
+
+.game-context {
+  height: 160px;
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  color: beige;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: beige;
 }
 
 p {
@@ -60,6 +93,10 @@ button {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+.show-button {
+  width: 180px;
+}
+
 button:hover {
   background-color: darkorange;
 }
@@ -72,7 +109,7 @@ footer {
   color: beige;
 }
 
-span {
+footer span {
   padding-right: 26px;
 }
 

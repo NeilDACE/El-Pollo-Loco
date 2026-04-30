@@ -8,17 +8,18 @@ class World {
   intervalIdsWorld = [];
   gameEnded = false;
   endScreen = null;
-  level = level1;
+  level = null;
   ctx;
   canvas;
   keyboard;
   kamera_x = 0;
   soundManager = new SoundManager();
 
-  constructor(canvas, keyboard) {
+  constructor(canvas, keyboard, level) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
     this.keyboard = keyboard;
+    this.level = level;
     this.draw();
     this.setWorld();
     this.runCollisionChecks();
@@ -63,22 +64,27 @@ class World {
   }
 
   runCollisionChecks() {
-    this.setStopableIntervals(() => {
-      if (this.gameEnded) return;
-      this.updateBossBackgroundMusic();
-      this.checkGameEnd();
-      this.checkCharacterFallingCollisions();
-      this.checkEnemyCollisions();
-      this.checkEnemyCollisionsWithBottle();
-      this.removeBrokenBottles();
-      this.level.coins = this.checkAndRemoveCollisions(this.level.coins, () =>
-        this.onCollisionWithCoin(),
-      );
-      this.level.bottles = this.checkAndRemoveCollisions(
-        this.level.bottles,
-        () => this.onCollisionWithBottle(),
-      );
-    }, 1000 / 60);
+    this.setStopableIntervals(() => this.gameTick(), 1000 / 60);
+  }
+
+  gameTick() {
+    if (this.gameEnded) return;
+    this.updateBossBackgroundMusic();
+    this.checkGameEnd();
+    this.checkCharacterFallingCollisions();
+    this.checkEnemyCollisions();
+    this.checkEnemyCollisionsWithBottle();
+    this.removeBrokenBottles();
+    this.checkCollectibleCollisions();
+  }
+
+  checkCollectibleCollisions() {
+    this.level.coins = this.checkAndRemoveCollisions(this.level.coins, () =>
+      this.onCollisionWithCoin(),
+    );
+    this.level.bottles = this.checkAndRemoveCollisions(this.level.bottles, () =>
+      this.onCollisionWithBottle(),
+    );
   }
 
   checkGameEnd() {

@@ -3,6 +3,7 @@ let ctx;
 let world;
 let keyboard = new Keyboard();
 let bgMusicStarted = false;
+let gameStarted = false;
 
 const CANVAS_WIDTH = 720;
 const CANVAS_HEIGHT = 480;
@@ -19,10 +20,67 @@ function setupCanvasRendering(canvasElement) {
   context.imageSmoothingQuality = "high";
 }
 
-function init() {
+function initCanvas() {
   canvas = document.getElementById("canvas");
   setupCanvasRendering(canvas);
-  world = new World(canvas, keyboard);
+}
+
+function hideUI(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+function showUI(id) {
+  document.getElementById(id).style.display = "block";
+}
+
+function fadeInContainer(container) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => container.classList.add("is-visible"));
+  });
+}
+
+function startBackgroundMusic() {
+  if (bgMusicStarted) return;
+  world.soundManager.playBackgroundMusic();
+  bgMusicStarted = true;
+}
+
+function destroyWorld() {
+  if (!world) return;
+  world.soundManager.stopAll();
+  world.clearAllGameIntervals();
+  world = null;
+}
+
+function createWorld() {
+  world = new World(canvas, keyboard, createLevel1());
+}
+
+function startGame() {
+  if (gameStarted) return;
+  hideUI("landing-page");
+  showUI("game-container");
+  createWorld();
+  gameStarted = true;
+  fadeInContainer(document.getElementById("game-container"));
+  startBackgroundMusic();
+}
+
+function restartGame() {
+  destroyWorld();
+  createWorld();
+  gameStarted = true;
+  startBackgroundMusic();
+}
+
+function goToLandingPage() {
+  destroyWorld();
+  gameStarted = false;
+  bgMusicStarted = false;
+  showUI("landing-page");
+  const container = document.getElementById("game-container");
+  container.classList.remove("is-visible");
+  hideUI("game-container");
 }
 
 function isLeftKey(key) {
@@ -46,11 +104,7 @@ function stopFootstepIfIdle() {
 }
 
 function handleKeyDown(e) {
-  if (!bgMusicStarted && world) {
-    world.soundManager.playBackgroundMusic();
-    bgMusicStarted = true;
-  }
-  if (e.repeat) return;
+  if (e.repeat || !gameStarted) return;
   if (isLeftKey(e.key)) {
     keyboard.LEFT = true;
     startFootstep();
@@ -66,6 +120,7 @@ function handleKeyDown(e) {
 }
 
 function handleKeyUp(e) {
+  if (!gameStarted) return;
   if (isLeftKey(e.key)) keyboard.LEFT = false;
   if (isRightKey(e.key)) keyboard.RIGHT = false;
   if (e.key == "ArrowUp" || e.key == "w") keyboard.UP = false;
