@@ -39,6 +39,9 @@ function muteOrUnmute() {
   } else {
     world.soundManager.unmuteAll();
   }
+  document.getElementById("audio-button").src = world.soundManager.muted
+    ? "img/buttons/audio_off.png"
+    : "img/buttons/audio_on.png";
 }
 
 function fadeInContainer(container) {
