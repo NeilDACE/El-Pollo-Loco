@@ -85,10 +85,16 @@
         </p>
       </div>
       <img src="img/5_background/" alt="" />
-      <button id="start-button" onclick="startGame()">Start Game</button>
+      <button
+        class="landing-page-button"
+        id="start-button"
+        onclick="startGame()"
+      >
+        Start Game
+      </button>
       <button
         id="show-button"
-        class="show-button"
+        class="landing-page-button show-button"
         onclick="showControlsOrStory()"
       >
         <span id="show-button-span">Show Controls</span>
@@ -102,7 +108,34 @@
       </footer>
     </section>
     <section id="game-container" class="game-container" style="display: none">
-      <canvas id="canvas" width="720" height="480"> </canvas>
+      <div class="canvas-wrapper">
+        <canvas id="canvas" width="720" height="480"> </canvas>
+        <div id="restart-button-container" class="restart-button-container">
+          <button onclick="restartGame()">restart</button>
+        </div>
+        <div class="settings-button-container">
+          <button onclick="muteOrUnmute()">
+            <img
+              id="audioButton
+            "
+              src="img/buttons/audio_off.png"
+              alt="Audio Off"
+            />
+          </button>
+          <button onclick="goToLandingPage()">menu</button>
+        </div>
+      </div>
+      <div class="controll-button-container">
+        <div class="movement-button-container">
+          <button>←</button>
+          <button>→</button>
+        </div>
+        <div class="action-button-container">
+          <button>jump</button>
+          <button>throw</button>
+          <button>buy</button>
+        </div>
+      </div>
     </section>
   </body>
 </html>

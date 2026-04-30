@@ -52,6 +52,12 @@ class World {
       ? "img/9_intro_outro_screens/you win!.png"
       : "img/9_intro_outro_screens/game_over/game over!.png";
     this.endScreen = new EndScreen(imagePath);
+    const restartButtonContainer = document.getElementById(
+      "restart-button-container",
+    );
+    if (restartButtonContainer) {
+      restartButtonContainer.style.display = "flex";
+    }
   }
 
   setWorld() {

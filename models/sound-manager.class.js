@@ -1,4 +1,5 @@
 class SoundManager {
+  muted = false;
   constructor() {
     this.sounds = {
       coin: new Audio("audio/coin_collected.mp3"),
@@ -81,12 +82,14 @@ class SoundManager {
   }
 
   muteAll() {
+    this.muted = true;
     Object.values(this.sounds).forEach((audio) => {
       audio.muted = true;
     });
   }
 
   unmuteAll() {
+    this.muted = false;
     Object.values(this.sounds).forEach((audio) => {
       audio.muted = false;
     });

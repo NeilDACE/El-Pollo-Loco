@@ -30,7 +30,15 @@ function hideUI(id) {
 }
 
 function showUI(id) {
-  document.getElementById(id).style.display = "block";
+  document.getElementById(id).style.display = "flex";
+}
+
+function muteOrUnmute() {
+  if (!world.soundManager.muted) {
+    world.soundManager.muteAll();
+  } else {
+    world.soundManager.unmuteAll();
+  }
 }
 
 function fadeInContainer(container) {
@@ -53,6 +61,12 @@ function destroyWorld() {
 }
 
 function createWorld() {
+  const restartButtonContainer = document.getElementById(
+    "restart-button-container",
+  );
+  if (restartButtonContainer) {
+    restartButtonContainer.style.display = "none";
+  }
   world = new World(canvas, keyboard, createLevel1());
 }
 
@@ -67,9 +81,20 @@ function startGame() {
 }
 
 function restartGame() {
+  const container = document.getElementById("game-container");
+  if (container) {
+    container.style.transition = "none";
+    container.classList.remove("is-visible");
+    void container.offsetWidth;
+    container.style.transition = "";
+  }
   destroyWorld();
   createWorld();
   gameStarted = true;
+  bgMusicStarted = false;
+  if (container) {
+    fadeInContainer(container);
+  }
   startBackgroundMusic();
 }
 

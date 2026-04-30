@@ -30,8 +30,15 @@ body {
 }
 
 .game-container {
+  gap: 0;
   opacity: 0;
   transition: opacity 2s ease;
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 720px;
+  height: 480px;
 }
 
 .game-container.is-visible {
@@ -81,7 +88,10 @@ p {
 }
 
 button {
-  padding: 12px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
   font-size: large;
   font-weight: bold;
   color: black;
@@ -91,6 +101,10 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.landing-page-button {
+  padding: 8px 16px;
 }
 
 .show-button {
@@ -133,6 +147,48 @@ a:visited:hover {
 
 canvas {
   background-color: black;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.restart-button-container {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 2;
+}
+
+.settings-button-container {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.controll-button-container {
+  width: 720px;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  gap: 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+button img {
+  width: 24px;
+  height: 24px;
+}
+
+.movement-button-container,
+.action-button-container {
+  display: flex;
+  gap: 8px;
 }
