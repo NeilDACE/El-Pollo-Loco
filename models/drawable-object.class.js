@@ -30,7 +30,12 @@ class DrawableObject {
 
   draw(ctx) {
     try {
-      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      const pr = window.devicePixelRatio || 1;
+      const sx = Math.round(this.x * pr) / pr;
+      const sy = Math.round(this.y * pr) / pr;
+      const sw = Math.round(this.width * pr) / pr;
+      const sh = Math.round(this.height * pr) / pr;
+      ctx.drawImage(this.img, sx, sy, sw, sh);
     } catch (error) {
       console.error(
         "Error drawing image:",

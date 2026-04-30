@@ -239,7 +239,9 @@ class World {
   }
 
   drawScrollableObjects() {
-    this.ctx.translate(this.kamera_x, 0);
+    const pr = window.devicePixelRatio || 1;
+    const kameraX = Math.round(this.kamera_x * pr) / pr;
+    this.ctx.translate(kameraX, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.throwableObjects);
@@ -247,7 +249,7 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.enemies);
-    this.ctx.translate(-this.kamera_x, 0);
+    this.ctx.translate(-kameraX, 0);
   }
 
   drawFixedObjects() {
