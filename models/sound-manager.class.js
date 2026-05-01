@@ -1,5 +1,5 @@
 class SoundManager {
-  muted = false;
+  muted;
   constructor() {
     this.sounds = {
       coin: new Audio("audio/coin_collected.mp3"),
@@ -35,6 +35,25 @@ class SoundManager {
     };
 
     this.applyVolumes();
+    this.loadVolumeMuteState();
+  }
+
+  saveVolumeMuteState() {
+    localStorage.setItem("muted", this.muted);
+  }
+
+  loadVolumeMuteState() {
+    try {
+      const muted = localStorage.getItem("muted");
+      this.muted = muted === "true";
+      if (this.muted) {
+        this.muteAll();
+      } else {
+        this.unmuteAll();
+      }
+    } catch (e) {
+      console.error("Error loading volume mute state:", e);
+    }
   }
 
   applyVolumes() {
@@ -86,6 +105,7 @@ class SoundManager {
     Object.values(this.sounds).forEach((audio) => {
       audio.muted = true;
     });
+    this.saveVolumeMuteState();
   }
 
   unmuteAll() {
@@ -93,6 +113,7 @@ class SoundManager {
     Object.values(this.sounds).forEach((audio) => {
       audio.muted = false;
     });
+    this.saveVolumeMuteState();
   }
 
   stop(sound) {

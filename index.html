@@ -111,28 +111,28 @@
       <div class="canvas-wrapper">
         <canvas id="canvas" width="720" height="480"> </canvas>
         <div id="restart-button-container" class="restart-button-container">
-          <button onclick="restartGame()">restart</button>
+          <button id="btn-restart">restart</button>
         </div>
         <div class="settings-button-container">
-          <button onclick="muteOrUnmute()">
+          <button id="btn-audio">
             <img
               id="audio-button"
               src="img/buttons/audio_on.png"
               alt="Audio On/Off Button"
             />
           </button>
-          <button onclick="goToLandingPage()">menu</button>
+          <button id="btn-menu">menu</button>
         </div>
       </div>
       <div class="controll-button-container">
         <div class="movement-button-container">
-          <button>←</button>
-          <button>→</button>
+          <button id="btn-left">←</button>
+          <button id="btn-right">→</button>
         </div>
         <div class="action-button-container">
-          <button>↑</button>
-          <button>↷</button>
-          <button>🛒</button>
+          <button id="btn-jump">↑</button>
+          <button id="btn-throw">↷</button>
+          <button id="btn-buy">🛒</button>
         </div>
       </div>
     </section>

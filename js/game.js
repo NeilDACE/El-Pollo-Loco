@@ -33,15 +33,19 @@ function showUI(id) {
   document.getElementById(id).style.display = "flex";
 }
 
+function updateAudioButton() {
+  document.getElementById("audio-button").src = world.soundManager.muted
+    ? "img/buttons/audio_off.png"
+    : "img/buttons/audio_on.png";
+}
+
 function muteOrUnmute() {
   if (!world.soundManager.muted) {
     world.soundManager.muteAll();
   } else {
     world.soundManager.unmuteAll();
   }
-  document.getElementById("audio-button").src = world.soundManager.muted
-    ? "img/buttons/audio_off.png"
-    : "img/buttons/audio_on.png";
+  updateAudioButton();
 }
 
 function fadeInContainer(container) {
@@ -71,6 +75,7 @@ function createWorld() {
     restartButtonContainer.style.display = "none";
   }
   world = new World(canvas, keyboard, createLevel1());
+  updateAudioButton();
 }
 
 function startGame() {
@@ -158,5 +163,84 @@ function handleKeyUp(e) {
   stopFootstepIfIdle();
 }
 
+function addHoldEvents(id, onDown, onUp) {
+  const el = document.getElementById(id);
+  el.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    onDown();
+  });
+  el.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    onUp();
+  });
+  el.addEventListener("mousedown", onDown);
+  el.addEventListener("mouseup", onUp);
+}
+
+function addClickEvents(id, onClick) {
+  const el = document.getElementById(id);
+  el.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    onClick();
+  });
+  el.addEventListener("click", onClick);
+}
+
+function handleBtsPress() {
+  addHoldEvents(
+    "btn-left",
+    () => {
+      keyboard.LEFT = true;
+      startFootstep();
+    },
+    () => {
+      keyboard.LEFT = false;
+      stopFootstepIfIdle();
+    },
+  );
+  addHoldEvents(
+    "btn-right",
+    () => {
+      keyboard.RIGHT = true;
+      startFootstep();
+    },
+    () => {
+      keyboard.RIGHT = false;
+      stopFootstepIfIdle();
+    },
+  );
+  addHoldEvents(
+    "btn-jump",
+    () => {
+      keyboard.SPACE = true;
+    },
+    () => {
+      keyboard.SPACE = false;
+    },
+  );
+  addHoldEvents(
+    "btn-throw",
+    () => {
+      keyboard.ENTER = true;
+    },
+    () => {
+      keyboard.ENTER = false;
+    },
+  );
+  addHoldEvents(
+    "btn-buy",
+    () => {
+      keyboard.UP = true;
+    },
+    () => {
+      keyboard.UP = false;
+    },
+  );
+  addClickEvents("btn-audio", muteOrUnmute);
+  addClickEvents("btn-restart", restartGame);
+  addClickEvents("btn-menu", goToLandingPage);
+}
+
+window.addEventListener("load", handleBtsPress);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
