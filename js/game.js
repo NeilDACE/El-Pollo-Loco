@@ -12,8 +12,6 @@ function setupCanvasRendering(canvasElement) {
   const pixelRatio = window.devicePixelRatio || 1;
   canvasElement.width = Math.floor(CANVAS_WIDTH * pixelRatio);
   canvasElement.height = Math.floor(CANVAS_HEIGHT * pixelRatio);
-  canvasElement.style.width = `${CANVAS_WIDTH}px`;
-  canvasElement.style.height = `${CANVAS_HEIGHT}px`;
   const context = canvasElement.getContext("2d");
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   context.imageSmoothingEnabled = true;

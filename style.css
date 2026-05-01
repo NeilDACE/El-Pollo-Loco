@@ -146,6 +146,8 @@ a:visited:hover {
 }
 
 canvas {
+  width: 720px;
+  height: 480px;
   background-color: black;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -164,22 +166,22 @@ canvas {
 .settings-button-container {
   position: absolute;
   right: 8px;
-  bottom: 8px;
+  top: 8px;
   display: flex;
   gap: 8px;
   z-index: 2;
 }
 
 .controll-button-container {
+  position: absolute;
+  bottom: 24px;
   width: 720px;
-  padding: 8px;
+  padding-left: 32px;
+  padding-right: 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   gap: 24px;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
 button img {
@@ -191,4 +193,39 @@ button img {
 .action-button-container {
   display: flex;
   gap: 8px;
+}
+
+@media only screen and (max-width: 720px) {
+  .canvas-wrapper {
+    width: 100%;
+  }
+
+  canvas {
+    width: 100%;
+  }
+
+  .game-container,
+  section {
+    width: 100%;
+  }
+
+  .controll-button-container {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-height: 480px) {
+  .canvas-wrapper {
+    width: auto;
+    height: 100%;
+  }
+
+  canvas {
+    height: 100%;
+  }
+
+  .game-container,
+  section {
+    height: 100dvh;
+  }
 }
