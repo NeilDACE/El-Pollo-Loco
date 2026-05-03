@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../img/5_background/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: "Georgia", serif;
+  padding: 32px 16px;
+}
+
+.impressum-card {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 640px;
+  width: 100%;
+  color: beige;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: orange;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  color: orange;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 166, 0, 0.4);
+  padding-bottom: 4px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: beige;
+}
+
+a {
+  color: orange;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: darkorange;
+  text-decoration: underline;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 10px 20px;
+  background-color: rgba(255, 166, 0, 0.8);
+  color: black;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+  background-color: darkorange;
+  color: black;
+  text-decoration: none;
+}
