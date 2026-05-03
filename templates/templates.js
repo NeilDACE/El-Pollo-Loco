@@ -18,8 +18,6 @@ function showStoryTemplate() {
           einschläft? <br />
           Richtig: Die Rache der Hühner!<br />
           Begleite unseren müden Mexikaner durch einen bizarren Traum, in dem
-          das Geflügel nicht auf dem Teller landet, sondern zurückschlägt.<br />
-          Spring, weich aus und verteidige deinen Schlafplatz gegen die pickende
-          Plage.
+          das Geflügel nicht auf dem Teller landet, sondern zurückschlägt.
         </p>`;
 }

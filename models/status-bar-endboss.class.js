@@ -1,5 +1,5 @@
 class StatusBarEndboss extends StatusBar {
-  x = 550;
+  x = 400;
   IMAGES = [
     "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
     "img/7_statusbars/2_statusbar_endboss/blue/blue20.png",
