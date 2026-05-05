@@ -24,10 +24,10 @@ function showControlsTemplate() {
  */
 function showStoryTemplate() {
   return `<p>
-          Was passiert, wenn man nach drei Burritos zu viel im 'El Pollo Loco'
-          einschläft? <br />
-          Richtig: Die Rache der Hühner!<br />
-          Begleite unseren müden Mexikaner durch einen bizarren Traum, in dem
-          das Geflügel nicht auf dem Teller landet, sondern zurückschlägt.
+          What happens when you fall asleep after one too many burritos at
+          'El Pollo Loco'? <br />
+          That's right: the revenge of the chickens!<br />
+          Join our drowsy Mexican through a bizarre dream where the poultry
+          isn't ending up on the plate — it's fighting back.
         </p>`;
 }
