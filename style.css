@@ -292,4 +292,9 @@ button img {
   section {
     height: 100dvh;
   }
+
+  .controll-button-container {
+    display: flex;
+    width: 100%;
+  }
 }
