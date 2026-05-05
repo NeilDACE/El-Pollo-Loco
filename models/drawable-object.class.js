@@ -50,7 +50,7 @@ class DrawableObject {
    */
   draw(ctx) {
     try {
-      const pr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const pr = window.devicePixelRatio || 1;
       const sx = Math.round(this.x * pr) / pr;
       const sy = Math.round(this.y * pr) / pr;
       const sw = Math.round(this.width * pr) / pr;
