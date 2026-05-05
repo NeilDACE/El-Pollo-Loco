@@ -44,18 +44,13 @@ class DrawableObject {
 
   /**
    * Draws the object's current image onto the canvas context.
-   * Uses pixel-ratio-aware rounding for crisp rendering.
+   * Uses the object's logical coordinates without additional pixel snapping.
    *
    * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
    */
   draw(ctx) {
     try {
-      const pr = window.devicePixelRatio || 1;
-      const sx = Math.round(this.x * pr) / pr;
-      const sy = Math.round(this.y * pr) / pr;
-      const sw = Math.round(this.width * pr) / pr;
-      const sh = Math.round(this.height * pr) / pr;
-      ctx.drawImage(this.img, sx, sy, sw, sh);
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     } catch (error) {
       console.error(
         "Error drawing image:",

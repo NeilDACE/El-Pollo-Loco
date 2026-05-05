@@ -23,4 +23,30 @@ class backgroundObject extends MovableObject {
       this.y = 480 - this.height;
     }
   }
+
+  /**
+   * Draws the background with physical-pixel-aligned coordinates to avoid sub-pixel seams.
+   *
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+   */
+  draw(ctx) {
+    try {
+      const pr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const sx = Math.round(this.x * pr) / pr;
+      const sy = Math.round(this.y * pr) / pr;
+      const sw = Math.round(this.width * pr) / pr;
+      const sh = Math.round(this.height * pr) / pr;
+      const previousSmoothing = ctx.imageSmoothingEnabled;
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(this.img, sx, sy, sw, sh);
+      ctx.imageSmoothingEnabled = previousSmoothing;
+    } catch (error) {
+      console.error(
+        "Error drawing background image:",
+        error,
+        "Image source:",
+        this.img?.src,
+      );
+    }
+  }
 }

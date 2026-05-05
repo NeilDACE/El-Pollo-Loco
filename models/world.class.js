@@ -351,7 +351,7 @@ class World {
    * translated by the camera offset.
    */
   drawScrollableObjects() {
-    const pr = window.devicePixelRatio || 1;
+    const pr = Math.min(window.devicePixelRatio || 1, 1.5);
     const kameraX = Math.round(this.kamera_x * pr) / pr;
     this.ctx.translate(kameraX, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
