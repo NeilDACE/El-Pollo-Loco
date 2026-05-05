@@ -11,6 +11,7 @@ class World {
   throwableObjects = [];
   intervalIdsWorld = [];
   gameEnded = false;
+  stopped = false;
   endScreen = null;
   level = null;
   ctx;
@@ -54,6 +55,7 @@ class World {
   clearAllGameIntervals() {
     this.intervalIdsWorld.forEach((id) => clearInterval(id));
     this.intervalIdsWorld = [];
+    this.stopped = true;
     this.character.clearIntervals();
     this.level.enemies.forEach((enemy) => enemy.clearIntervals());
     this.level.coins.forEach((coin) => coin.clearIntervals());
@@ -339,6 +341,7 @@ class World {
    * Clears the canvas and redraws all game objects each frame via requestAnimationFrame.
    */
   draw() {
+    if (this.stopped) return;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.drawScrollableObjects();
     this.drawFixedObjects();

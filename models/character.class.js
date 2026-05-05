@@ -251,6 +251,8 @@ class Character extends MovableObject {
       return this.animState("jump", this.IMAGES_JUMPING, 2);
     if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)
       return this.animState("walk", this.IMAGES_WALKING, 2);
+    if (this.world.keyboard.ENTER)
+      return this.animState("idle", this.IMAGES_IDLE, 2);
     return this.getIdleState();
   }
 

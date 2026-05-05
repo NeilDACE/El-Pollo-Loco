@@ -64,7 +64,7 @@ section {
 }
 
 .game-context {
-  height: 150px;
+  height: auto;
 }
 
 .controls-container {
@@ -187,6 +187,7 @@ canvas {
 .control-button {
   padding: 4px 8px;
   border: black solid 1px;
+  background-color: rgb(255, 166, 0);
 }
 
 .control-button-mobile {
@@ -268,7 +269,6 @@ button img {
   .landing-page {
     width: 100%;
     height: 100%;
-    border-radius: 0;
   }
   section {
     gap: 8px;
