@@ -99,7 +99,7 @@ class SoundManager {
   play(sound) {
     if (this.sounds[sound]) {
       this.sounds[sound].currentTime = 0;
-      this.sounds[sound].play();
+      this.sounds[sound].play().catch(() => {});
     }
   }
 
@@ -136,7 +136,7 @@ class SoundManager {
     if (this.currentBackgroundTrack) this.stop(this.currentBackgroundTrack);
     track.loop = true;
     track.currentTime = 0;
-    track.play();
+    track.play().catch(() => {});
     this.currentBackgroundTrack = trackName;
   }
 
