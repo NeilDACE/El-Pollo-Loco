@@ -86,6 +86,9 @@ class World {
     if (restartButtonContainer) {
       restartButtonContainer.style.display = "flex";
     }
+    setTimeout(() => {
+      this.clearAllGameIntervals();
+    }, 2000);
   }
 
   /**

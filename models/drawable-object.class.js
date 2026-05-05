@@ -79,11 +79,13 @@ class DrawableObject {
    */
   isDebugFrameTarget() {
     return false;
-    // this instanceof Character ||
-    // this instanceof ThrowableBottle ||
-    // this instanceof Chicken ||
-    // this instanceof SmallChicken ||
-    // this instanceof Endboss
+    // return (
+    //   this instanceof Character ||
+    //   this instanceof ThrowableBottle ||
+    //   this instanceof Chicken ||
+    //   this instanceof SmallChicken ||
+    //   this instanceof Endboss
+    // );
   }
 
   /**
