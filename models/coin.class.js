@@ -3,11 +3,17 @@
  * Extends {@link MovableObject}.
  */
 class Coin extends MovableObject {
-  width = 150;
-  height = 150.5;
+  width = 100;
+  height = 100.5;
   x = 200;
   y = 425 - this.height;
   speed = 0.15 + Math.random() * 0.25;
+  offset = {
+    top: 35,
+    left: 35,
+    right: 35,
+    bottom: 35,
+  };
 
   /**
    * Creates a coin at the given position and starts its spin animation.

@@ -78,14 +78,15 @@ class DrawableObject {
    * @returns {boolean} Always returns false by default.
    */
   isDebugFrameTarget() {
-    return false;
-    // return (
-    //   this instanceof Character ||
-    //   this instanceof ThrowableBottle ||
-    //   this instanceof Chicken ||
-    //   this instanceof SmallChicken ||
-    //   this instanceof Endboss
-    // );
+    return (
+      this instanceof Coin ||
+      this instanceof Bottle ||
+      this instanceof Character ||
+      this instanceof ThrowableBottle ||
+      this instanceof Chicken ||
+      this instanceof SmallChicken ||
+      this instanceof Endboss
+    );
   }
 
   /**

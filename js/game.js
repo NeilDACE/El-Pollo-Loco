@@ -252,15 +252,23 @@ function handleKeyUp(e) {
  */
 function addHoldEvents(id, onDown, onUp) {
   const el = document.getElementById(id);
-  el.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    onDown();
-  });
-  el.addEventListener("touchend", (e) => {
-    e.preventDefault();
-    onUp();
-    el.blur();
-  });
+  el.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.cancelable) e.preventDefault();
+      onDown();
+    },
+    { passive: false },
+  );
+  el.addEventListener(
+    "touchend",
+    (e) => {
+      if (e.cancelable) e.preventDefault();
+      onUp();
+      el.blur();
+    },
+    { passive: false },
+  );
   el.addEventListener("mousedown", onDown);
   el.addEventListener("mouseup", () => {
     onUp();

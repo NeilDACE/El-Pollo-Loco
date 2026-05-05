@@ -8,7 +8,7 @@ function showControlsTemplate() {
   <h2>Controls</h2>
   <div class="divider"></div>
   <ul>
-    <li>Arrow Up(W): Buy</li>
+    <li>Arrow Up(W): Buy(only available in market)</li>
     <li>Arrow Left(A): Move Left</li>
     <li>Arrow Right(D): Move Right</li>
     <li>Space: Jump</li>

@@ -3,10 +3,17 @@
  * Extends {@link MovableObject}.
  */
 class Bottle extends MovableObject {
-  width = 60;
-  height = 60;
+  width = 40;
+  height = 40;
   x = 200;
-  y = 350;
+  y = 365;
+  offset = {
+    top: 8,
+    left: 16,
+    right: 10,
+    bottom: 8,
+  };
+
   IMAGES_ON_GROUND = [
     "img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
     "img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
