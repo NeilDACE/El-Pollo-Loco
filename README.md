@@ -10,6 +10,7 @@ In this game you control Pepe, fight waves of chickens, collect coins and bottle
 - Character movement, jump, bottle throw, and buy action
 - Multiple enemy types (small chicken, chicken, end boss)
 - **Swarm mechanic (by design):** Only one stomp registers per jump — chicken swarms are intentionally dangerous and require bottles to clear safely
+- **Normal chickens (by design):** Cannot be stomped — must be killed with thrown bottles only
 - Collectibles (coins and bottles)
 - Health and collectible status bars
 - Sound effects and background music toggle
