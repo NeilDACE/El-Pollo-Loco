@@ -98,8 +98,9 @@ class SoundManager {
    */
   play(sound) {
     if (this.sounds[sound]) {
-      this.sounds[sound].currentTime = 0;
-      this.sounds[sound].play().catch(() => {});
+      const audio = this.sounds[sound];
+      audio.currentTime = 0;
+      audio._playPromise = audio.play().catch(() => {});
     }
   }
 
@@ -136,7 +137,7 @@ class SoundManager {
     if (this.currentBackgroundTrack) this.stop(this.currentBackgroundTrack);
     track.loop = true;
     track.currentTime = 0;
-    track.play().catch(() => {});
+    track._playPromise = track.play().catch(() => {});
     this.currentBackgroundTrack = trackName;
   }
 
@@ -167,21 +168,31 @@ class SoundManager {
    *
    * @param {string} sound - The key of the sound to stop.
    */
-  stop(sound) {
+  async stop(sound) {
     if (this.sounds[sound]) {
-      this.sounds[sound].pause();
-      this.sounds[sound].currentTime = 0;
+      const audio = this.sounds[sound];
+      try {
+        await audio._playPromise;
+        audio.pause();
+        audio.currentTime = 0;
+        audio._playPromise = null;
+      } catch {}
     }
   }
 
   /**
    * Pauses and resets all sounds and clears the current background track reference.
    */
-  stopAll() {
-    Object.values(this.sounds).forEach((audio) => {
-      audio.pause();
-      audio.currentTime = 0;
+  async stopAll() {
+    const stops = Object.values(this.sounds).map(async (audio) => {
+      try {
+        await audio._playPromise;
+        audio.pause();
+        audio.currentTime = 0;
+        audio._playPromise = null;
+      } catch {}
     });
+    await Promise.all(stops);
     this.currentBackgroundTrack = null;
   }
 }
