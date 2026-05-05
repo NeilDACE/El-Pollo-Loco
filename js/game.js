@@ -259,9 +259,13 @@ function addHoldEvents(id, onDown, onUp) {
   el.addEventListener("touchend", (e) => {
     e.preventDefault();
     onUp();
+    el.blur();
   });
   el.addEventListener("mousedown", onDown);
-  el.addEventListener("mouseup", onUp);
+  el.addEventListener("mouseup", () => {
+    onUp();
+    el.blur();
+  });
 }
 
 /**
@@ -275,8 +279,12 @@ function addClickEvents(id, onClick) {
   el.addEventListener("touchstart", (e) => {
     e.preventDefault();
     onClick();
+    el.blur();
   });
-  el.addEventListener("click", onClick);
+  el.addEventListener("click", () => {
+    onClick();
+    el.blur();
+  });
 }
 
 /**

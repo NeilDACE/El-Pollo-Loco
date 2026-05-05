@@ -24,10 +24,8 @@ function showControlsTemplate() {
  */
 function showStoryTemplate() {
   return `<p>
-          What happens when you fall asleep after one too many burritos at
-          'El Pollo Loco'? <br />
-          That's right: the revenge of the chickens!<br />
-          Join our drowsy Mexican through a bizarre dream where the poultry
-          isn't ending up on the plate — it's fighting back.
-        </p>`;
+  Fall asleep at 'El Pollo Loco' and face the revenge of the chickens!<br />
+  Fight through waves of enemies, collect coins &amp; bottles, and defeat the boss.<br />
+  Stomp small chickens, throw bottles at bigger ones, and buy ammo at the market.
+</p>`;
 }
