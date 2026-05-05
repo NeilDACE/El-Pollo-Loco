@@ -71,71 +71,73 @@
     <script src="script.js" defer></script>
   </head>
   <body onload="init()">
-    <div id="orientation-warning" class="orientation-warning">
-      <p>Please rotate your device to landscape mode!</p>
-    </div>
-    <section id="landing-page" class="landing-page">
-      <h1>El Pollo Loco</h1>
-      <div class="game-context" id="game-context">
-        <p>
-          Fall asleep at 'El Pollo Loco' and face the revenge of the
-          chickens!<br />
-          Fight through waves of enemies, collect coins &amp; bottles, and
-          defeat the boss.<br />
-          Stomp small chickens, throw bottles at bigger ones, and buy ammo at
-          the market.
-        </p>
+    <main>
+      <div id="orientation-warning" class="orientation-warning">
+        <p>Please rotate your device to landscape mode!</p>
       </div>
-      <button
-        class="landing-page-button"
-        id="start-button"
-        onclick="startGame()"
-      >
-        Start Game
-      </button>
-      <button
-        id="show-button"
-        class="landing-page-button show-button"
-        onclick="showControlsOrStory()"
-      >
-        <span id="show-button-span">Show Controls</span>
-      </button>
-      <footer>
-        <p>
-          <span>Developed by</span>
-          <a href="https://github.com/NeilDACE" target="_blank">Neil DACE</a>
-        </p>
-        <a href="pages/legal-notice.html" target="_blank">Legal Notice</a>
-      </footer>
-    </section>
-    <section id="game-container" class="game-container" style="display: none">
-      <div class="canvas-wrapper">
-        <canvas id="canvas"> </canvas>
-        <div id="restart-button-container" class="restart-button-container">
-          <button class="control-button" id="btn-restart">restart</button>
+      <section id="landing-page" class="landing-page">
+        <h1>El Pollo Loco</h1>
+        <div class="game-context" id="game-context">
+          <p>
+            Fall asleep at 'El Pollo Loco' and face the revenge of the
+            chickens!<br />
+            Fight through waves of enemies, collect coins &amp; bottles, and
+            defeat the boss.<br />
+            Stomp small chickens, throw bottles at bigger ones, and buy ammo at
+            the market.
+          </p>
         </div>
-        <div class="settings-button-container">
-          <button class="control-button" id="btn-audio">
-            <img
-              id="audio-button"
-              src="img/buttons/audio_on.png"
-              alt="Audio On/Off Button"
-            />
-          </button>
-          <button class="control-button" id="btn-menu">menu</button>
-        </div>
-        <div class="controll-button-container">
-          <div class="movement-button-container">
-            <button class="control-button-mobile" id="btn-left">←</button>
-            <button class="control-button-mobile" id="btn-right">→</button>
+        <button
+          class="landing-page-button"
+          id="start-button"
+          onclick="startGame()"
+        >
+          Start Game
+        </button>
+        <button
+          id="show-button"
+          class="landing-page-button show-button"
+          onclick="showControlsOrStory()"
+        >
+          <span id="show-button-span">Show Controls</span>
+        </button>
+        <footer>
+          <p>
+            <span>Developed by</span>
+            <a href="https://github.com/NeilDACE" target="_blank">Neil DACE</a>
+          </p>
+          <a href="pages/legal-notice.html" target="_blank">Legal Notice</a>
+        </footer>
+      </section>
+      <section id="game-container" class="game-container" style="display: none">
+        <div class="canvas-wrapper">
+          <canvas id="canvas"> </canvas>
+          <div id="restart-button-container" class="restart-button-container">
+            <button class="control-button" id="btn-restart">restart</button>
           </div>
-          <div class="action-button-container">
-            <button class="control-button-mobile" id="btn-jump">↑</button>
-            <button class="control-button-mobile" id="btn-throw">↷</button>
-            <button class="control-button-mobile" id="btn-buy">🛒</button>
+          <div class="settings-button-container">
+            <button class="control-button" id="btn-audio">
+              <img
+                id="audio-button"
+                src="img/buttons/audio_on.png"
+                alt="Audio On/Off Button"
+              />
+            </button>
+            <button class="control-button" id="btn-menu">menu</button>
+          </div>
+          <div class="controll-button-container">
+            <div class="movement-button-container">
+              <button class="control-button-mobile" id="btn-left">←</button>
+              <button class="control-button-mobile" id="btn-right">→</button>
+            </div>
+            <div class="action-button-container">
+              <button class="control-button-mobile" id="btn-jump">↑</button>
+              <button class="control-button-mobile" id="btn-throw">↷</button>
+              <button class="control-button-mobile" id="btn-buy">🛒</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
   </body>
 </html>

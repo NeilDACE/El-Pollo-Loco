@@ -21,7 +21,7 @@ function setupCanvasRendering(canvasElement) {
   const context = canvasElement.getContext("2d");
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   context.imageSmoothingEnabled = true;
-  context.imageSmoothingQuality = "medium";
+  context.imageSmoothingQuality = "high";
 }
 
 /**
