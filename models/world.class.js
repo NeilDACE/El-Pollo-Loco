@@ -199,14 +199,19 @@ class World {
 
   /**
    * Checks whether the character is stomping a small chicken from above and kills it.
+   * Intentional design: only one stomp per jump is registered. Chicken swarms cannot
+   * be cleared by jumping — the player must use bottles to deal with groups safely.
    */
   checkCharacterFallingCollisions() {
+    let stompedThisJump = false;
     this.level.enemies.forEach((enemy) => {
       if (
+        !stompedThisJump &&
         this.character.isColliding(enemy) &&
         !enemy.isDead() &&
         this.isStompFromAbove(enemy)
       ) {
+        stompedThisJump = true;
         enemy.hit(10);
         this.soundManager.play("hitChicken");
         this.character.speedY = 10;
