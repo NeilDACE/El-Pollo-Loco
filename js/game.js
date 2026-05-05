@@ -15,13 +15,13 @@ const CANVAS_HEIGHT = 480;
  * @param {HTMLCanvasElement} canvasElement - The canvas element to configure.
  */
 function setupCanvasRendering(canvasElement) {
-  const pixelRatio = window.devicePixelRatio || 1;
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
   canvasElement.width = Math.floor(CANVAS_WIDTH * pixelRatio);
   canvasElement.height = Math.floor(CANVAS_HEIGHT * pixelRatio);
   const context = canvasElement.getContext("2d");
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   context.imageSmoothingEnabled = true;
-  context.imageSmoothingQuality = "high";
+  context.imageSmoothingQuality = "medium";
 }
 
 /**
