@@ -123,7 +123,7 @@ class Endboss extends MovableObject {
    * Plays the hurt animation.
    */
   handleHurtState() {
-    if (this.currentState !== "hurt") {
+    if (this.currentState !== "hurt" && !this.isAboveGround()) {
       this.jump();
     }
     this.playStateAnimation("hurt", this.IMAGES_HURT, 10);
@@ -133,6 +133,7 @@ class Endboss extends MovableObject {
    * Plays the attack animation.
    */
   handleAttackState() {
+    this.speed = 0;
     this.playStateAnimation("attack", this.IMAGES_ATTACK, 10);
   }
 
@@ -143,7 +144,6 @@ class Endboss extends MovableObject {
     this.playStateAnimation("alert", this.IMAGES_ALERT, 12);
     if (this.currentImage < this.IMAGES_ALERT.length) return;
     this.alert = true;
-    this.speed = 2.5;
     this.walkSpeed = 6;
   }
 
@@ -156,6 +156,8 @@ class Endboss extends MovableObject {
         this.speed = 4.5;
       } else if (this.energy <= 50) {
         this.speed = 3.5;
+      } else {
+        this.speed = 2.5;
       }
     }
     this.moveLeft();
