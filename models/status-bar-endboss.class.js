@@ -1,3 +1,8 @@
+/**
+ * Health status bar for the endboss.
+ * Displayed in the top-right area when the boss is alerted.
+ * Extends {@link StatusBar}.
+ */
 class StatusBarEndboss extends StatusBar {
   x = 400;
   IMAGES = [
@@ -9,6 +14,9 @@ class StatusBarEndboss extends StatusBar {
     "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
   ];
 
+  /**
+   * Loads the endboss health bar images and sets the initial percentage to 100.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES);

@@ -1,3 +1,9 @@
+/**
+ * Creates and returns Level 1, including all enemies, clouds,
+ * coins, bottles, and background objects.
+ *
+ * @returns {Level} A new Level instance populated with all game objects for Level 1.
+ */
 function createLevel1() {
   return new Level(
     [

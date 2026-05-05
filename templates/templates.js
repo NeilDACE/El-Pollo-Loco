@@ -1,3 +1,8 @@
+/**
+ * Returns the HTML string for the controls overlay.
+ *
+ * @returns {string} HTML markup listing all keyboard and button controls.
+ */
 function showControlsTemplate() {
   return `<div class="controls-container">
   <h2>Controls</h2>
@@ -12,6 +17,11 @@ function showControlsTemplate() {
 </div>`;
 }
 
+/**
+ * Returns the HTML string for the game story description.
+ *
+ * @returns {string} HTML paragraph with the game's backstory text.
+ */
 function showStoryTemplate() {
   return `<p>
           Was passiert, wenn man nach drei Burritos zu viel im 'El Pollo Loco'

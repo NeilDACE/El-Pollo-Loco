@@ -1,3 +1,8 @@
+/**
+ * Represents the player-controlled character.
+ * Handles movement, animation states, throwing, buying, and death.
+ * Extends {@link MovableObject}.
+ */
 class Character extends MovableObject {
   height = 300;
   width = 152.5;
@@ -76,6 +81,9 @@ class Character extends MovableObject {
   idleStartedAt = null;
   deathJumpDone = false;
 
+  /**
+   * Creates the character, loads all animation images, and starts movement and animation loops.
+   */
   constructor() {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
@@ -89,11 +97,17 @@ class Character extends MovableObject {
     this.coinCounter = 0;
   }
 
+  /**
+   * Starts the movement and animation loops.
+   */
   animate() {
     this.movement();
     this.animation();
   }
 
+  /**
+   * Starts the movement loop that processes keyboard input every frame.
+   */
   movement() {
     this.setStopableInterval(() => {
       if (this.cantMove()) return;
@@ -112,14 +126,30 @@ class Character extends MovableObject {
     }, 1000 / 60);
   }
 
+  /**
+   * Checks whether the character can move right.
+   *
+   * @returns {boolean} True if the RIGHT key is pressed and the character has not reached the level end.
+   */
   canMoveRight() {
     return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
   }
 
+  /**
+   * Checks whether the character can move left.
+   *
+   * @returns {boolean} True if the LEFT key is pressed and the character is past the left boundary.
+   */
   canMoveLeft() {
     return this.world.keyboard.LEFT && this.x > 102;
   }
 
+  /**
+   * Checks whether the character can purchase a bottle.
+   *
+   * @returns {boolean} True if UP is pressed, the buy key is not locked, the character is on the ground,
+   *   and the character is in the market section.
+   */
   canBuy() {
     return (
       this.world.keyboard.UP &&
@@ -129,16 +159,29 @@ class Character extends MovableObject {
     );
   }
 
+  /**
+   * Checks whether the character can jump.
+   *
+   * @returns {boolean} True if SPACE is pressed and the character is on the ground.
+   */
   canJump() {
     return this.world.keyboard.SPACE && !this.isAboveGround();
   }
 
+  /**
+   * Checks whether the character can throw a bottle.
+   *
+   * @returns {boolean} True if ENTER is pressed, the throw cooldown has elapsed, and a bottle is available.
+   */
   canThrow() {
     return (
       this.world.keyboard.ENTER && !this.isThrown() && this.bottleAvailable()
     );
   }
 
+  /**
+   * Creates a new throwable bottle, adds it to the world, and decrements the bottle counter.
+   */
   throw() {
     let bottle = new ThrowableBottle(this.x + 100, this.y + 100);
     bottle.world = this.world;
@@ -148,15 +191,26 @@ class Character extends MovableObject {
     this.world.statusBottle.setCount(this.bottleCounter);
   }
 
+  /**
+   * Triggers a bottle purchase and locks the buy key to prevent repeat purchases.
+   */
   buy() {
     this.buyBottle();
     this.buyKeyLocked = true;
   }
 
+  /**
+   * Checks whether the character is unable to move (dead or in the finish section).
+   *
+   * @returns {boolean} True if movement should be blocked.
+   */
   cantMove() {
     return this.isDead() || this.world.checkFinishSection();
   }
 
+  /**
+   * Starts the animation loop that updates the character's sprite each frame.
+   */
   animation() {
     this.setStopableInterval(() => {
       this.animationFrameCount++;
@@ -169,6 +223,9 @@ class Character extends MovableObject {
     }, 60);
   }
 
+  /**
+   * Handles the death animation: triggers the jump effect once and plays the dead sprite sequence.
+   */
   handleDeadAnimation() {
     this.idleStartedAt = null;
     if (!this.deathJumpDone) {
@@ -180,6 +237,12 @@ class Character extends MovableObject {
     this.playDeadAnimation();
   }
 
+  /**
+   * Determines the animation state to use on the current frame based on game conditions.
+   *
+   * @returns {{ nextState: string, nextImages: string[], nextRate: number }}
+   *   The next animation state descriptor.
+   */
   getNextAnimationState() {
     if (this.world.checkFinishSection())
       return this.animState("idle_long", this.IMAGES_IDLE_LONG, 5);
@@ -191,11 +254,25 @@ class Character extends MovableObject {
     return this.getIdleState();
   }
 
+  /**
+   * Creates an animation state descriptor and resets the idle timer.
+   *
+   * @param {string} nextState - The state identifier.
+   * @param {string[]} nextImages - The image paths for this state.
+   * @param {number} nextRate - Ticks between frame advances.
+   * @returns {{ nextState: string, nextImages: string[], nextRate: number }}
+   */
   animState(nextState, nextImages, nextRate) {
     this.idleStartedAt = null;
     return { nextState, nextImages, nextRate };
   }
 
+  /**
+   * Returns the appropriate idle animation state based on how long the character
+   * has been idle. Switches to long-idle after 15 seconds.
+   *
+   * @returns {{ nextState: string, nextImages: string[], nextRate: number }}
+   */
   getIdleState() {
     if (this.idleStartedAt === null) {
       this.idleStartedAt = Date.now();
@@ -208,6 +285,10 @@ class Character extends MovableObject {
     };
   }
 
+  /**
+   * Purchases one bottle for 2 coins if the character has enough coins.
+   * Updates both status bars and plays the buy sound.
+   */
   buyBottle() {
     if (this.coinCounter >= 2) {
       this.coinCounter -= 2;

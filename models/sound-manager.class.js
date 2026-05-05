@@ -1,5 +1,11 @@
+/**
+ * Manages all game audio: playback, volume, muting, and background music switching.
+ */
 class SoundManager {
   muted;
+  /**
+   * Initialises all Audio instances, sets per-track volumes, and restores the saved mute state.
+   */
   constructor() {
     this.sounds = {
       coin: new Audio("audio/coin_collected.mp3"),
@@ -38,10 +44,16 @@ class SoundManager {
     this.loadVolumeMuteState();
   }
 
+  /**
+   * Persists the current mute state to localStorage.
+   */
   saveVolumeMuteState() {
     localStorage.setItem("muted", this.muted);
   }
 
+  /**
+   * Reads the mute state from localStorage and applies it.
+   */
   loadVolumeMuteState() {
     try {
       const muted = localStorage.getItem("muted");
@@ -56,6 +68,9 @@ class SoundManager {
     }
   }
 
+  /**
+   * Applies per-track volumes scaled by the master volume to all sound instances.
+   */
   applyVolumes() {
     Object.keys(this.sounds).forEach((key) => {
       const singleVolume = this.volumes[key] ?? 1;
@@ -66,11 +81,21 @@ class SoundManager {
     });
   }
 
+  /**
+   * Sets the master volume and reapplies all individual track volumes.
+   *
+   * @param {number} value - Master volume between 0 and 1.
+   */
   setMasterVolume(value) {
     this.masterVolume = Math.min(1, Math.max(0, value));
     this.applyVolumes();
   }
 
+  /**
+   * Plays a sound effect from the beginning.
+   *
+   * @param {string} sound - The key of the sound to play (e.g. 'coin', 'hit').
+   */
   play(sound) {
     if (this.sounds[sound]) {
       this.sounds[sound].currentTime = 0;
@@ -78,18 +103,33 @@ class SoundManager {
     }
   }
 
+  /**
+   * Starts the main level background music if not already playing.
+   */
   playBackgroundMusic() {
     this.playBackgroundTrack("backgroundMusic");
   }
 
+  /**
+   * Switches to the endboss fight music if not already playing.
+   */
   playEndbossBackgroundMusic() {
     this.playBackgroundTrack("endbossBackgroundMusic");
   }
 
+  /**
+   * Switches to the post-endboss victory music if not already playing.
+   */
   playAfterEndbossMusic() {
     this.playBackgroundTrack("afterEndbossMusic");
   }
 
+  /**
+   * Switches the looping background music to the specified track.
+   * Stops the current track before starting the new one.
+   *
+   * @param {string} trackName - The key of the background track to play.
+   */
   playBackgroundTrack(trackName) {
     const track = this.sounds[trackName];
     if (!track || this.currentBackgroundTrack === trackName) return;
@@ -100,6 +140,9 @@ class SoundManager {
     this.currentBackgroundTrack = trackName;
   }
 
+  /**
+   * Mutes all sounds and saves the mute state.
+   */
   muteAll() {
     this.muted = true;
     Object.values(this.sounds).forEach((audio) => {
@@ -108,6 +151,9 @@ class SoundManager {
     this.saveVolumeMuteState();
   }
 
+  /**
+   * Unmutes all sounds and saves the mute state.
+   */
   unmuteAll() {
     this.muted = false;
     Object.values(this.sounds).forEach((audio) => {
@@ -116,6 +162,11 @@ class SoundManager {
     this.saveVolumeMuteState();
   }
 
+  /**
+   * Pauses a sound and resets it to the beginning.
+   *
+   * @param {string} sound - The key of the sound to stop.
+   */
   stop(sound) {
     if (this.sounds[sound]) {
       this.sounds[sound].pause();
@@ -123,6 +174,9 @@ class SoundManager {
     }
   }
 
+  /**
+   * Pauses and resets all sounds and clears the current background track reference.
+   */
   stopAll() {
     Object.values(this.sounds).forEach((audio) => {
       audio.pause();

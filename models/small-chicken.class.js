@@ -1,3 +1,8 @@
+/**
+ * Represents a small chicken enemy that can be stomped by the player.
+ * Walks left and freezes on the dead frame when defeated.
+ * Extends {@link MovableObject}.
+ */
 class SmallChicken extends MovableObject {
   width = 59;
   height = 52.5;
@@ -18,6 +23,11 @@ class SmallChicken extends MovableObject {
   ];
   IMAGES_DEAD = ["img/3_enemies_chicken/chicken_small/2_dead/dead.png"];
 
+  /**
+   * Creates a small chicken at the given X position (with added randomness) and starts its animation.
+   *
+   * @param {number} xKoordinateChicken - Base X position for the small chicken.
+   */
   constructor(xKoordinateChicken) {
     super();
     this.loadImage(this.IMAGES_WALKING[0]);
@@ -27,6 +37,10 @@ class SmallChicken extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the animation loop: moves left and cycles through walking frames,
+   * or freezes on the dead frame when defeated.
+   */
   animate() {
     this.setStopableInterval(() => {
       this.animationFrameCount++;

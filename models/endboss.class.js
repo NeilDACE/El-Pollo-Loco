@@ -1,3 +1,8 @@
+/**
+ * Represents the final boss enemy.
+ * Cycles through alert, attack, hurt, walk, and dead states.
+ * Extends {@link MovableObject}.
+ */
 class Endboss extends MovableObject {
   width = 256;
   height = 304.25;
@@ -51,6 +56,9 @@ class Endboss extends MovableObject {
     "img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
+  /**
+   * Creates the endboss, loads all animation images, and starts gravity and the animation loop.
+   */
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
@@ -62,6 +70,9 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the main animation loop that evaluates the boss state each frame.
+   */
   animate() {
     this.setStopableInterval(() => {
       this.animationFrameCount++;
@@ -75,10 +86,22 @@ class Endboss extends MovableObject {
     }, 1000 / 60);
   }
 
+  /**
+   * Checks whether the endboss is currently touching the character.
+   *
+   * @param {Character} character - The player character.
+   * @returns {boolean} True if the boss is colliding with the character.
+   */
   isCollidingWithCharacter(character) {
     return !!character && this.isColliding(character);
   }
 
+  /**
+   * Checks whether the endboss should transition into the alert state.
+   *
+   * @param {Character} character - The player character.
+   * @returns {boolean} True if the character is within alert range and the boss is not yet alerted.
+   */
   shouldAlert(character) {
     if (!character || this.alert) return false;
     const bossCenter = this.x + this.width / 2;
@@ -86,6 +109,9 @@ class Endboss extends MovableObject {
     return Math.abs(bossCenter - charCenter) <= this.alertRange;
   }
 
+  /**
+   * Handles the dead state: stops movement, disables collisions, and plays the death animation.
+   */
   handleDeadState() {
     this.speed = 0;
     this.ignoreGroundCollision = true;
@@ -93,14 +119,23 @@ class Endboss extends MovableObject {
     this.playDeadAnimation("dead", this.IMAGES_DEAD, 10);
   }
 
+  /**
+   * Plays the hurt animation.
+   */
   handleHurtState() {
     this.playStateAnimation("hurt", this.IMAGES_HURT, 10);
   }
 
+  /**
+   * Plays the attack animation.
+   */
   handleAttackState() {
     this.playStateAnimation("attack", this.IMAGES_ATTACK, 10);
   }
 
+  /**
+   * Plays the alert animation. Once complete, activates the boss and increases its speed.
+   */
   handleAlertState() {
     this.playStateAnimation("alert", this.IMAGES_ALERT, 12);
     if (this.currentImage < this.IMAGES_ALERT.length) return;
@@ -109,6 +144,9 @@ class Endboss extends MovableObject {
     this.walkSpeed = 6;
   }
 
+  /**
+   * Moves the boss left and plays the walking animation.
+   */
   handleWalkState() {
     this.moveLeft();
     this.playStateAnimation("walk", this.IMAGES_WALKING, this.walkSpeed);
