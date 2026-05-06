@@ -132,7 +132,34 @@ class Character extends MovableObject {
    * @returns {boolean} True if the RIGHT key is pressed and the character has not reached the level end.
    */
   canMoveRight() {
-    return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
+    return (
+      this.world.keyboard.RIGHT &&
+      this.x < this.world.level.level_end_x &&
+      !this.wouldRunIntoEndboss()
+    );
+  }
+
+  /**
+   * Predicts whether the next step to the right would collide with the living endboss.
+   *
+   * @returns {boolean} True if moving right on this frame should be blocked.
+   */
+  wouldRunIntoEndboss() {
+    const endboss = this.world.getEndboss?.();
+    if (!endboss || endboss.isDead() || endboss.ignoreCollisions) {
+      return false;
+    }
+    const nextX = this.x + this.speed;
+    return (
+      nextX + this.width - this.offset.right >
+        endboss.x + endboss.offset.left &&
+      this.y + this.height - this.offset.bottom >
+        endboss.y + endboss.offset.top &&
+      nextX + this.offset.left <
+        endboss.x + endboss.width - endboss.offset.right &&
+      this.y + this.offset.top <
+        endboss.y + endboss.height - endboss.offset.bottom
+    );
   }
 
   /**
