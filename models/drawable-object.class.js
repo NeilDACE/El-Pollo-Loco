@@ -12,6 +12,12 @@ class DrawableObject {
   currentImage = 0;
 
   /**
+   * Indicates whether debug mode is enabled for this object.
+   * When enabled, debug frames and collision boxes are drawn.
+   */
+  debugMode = false;
+
+  /**
    * Loads a single image and assigns it to `this.img`.
    *
    * @param {string} path - The path to the image file.
@@ -73,21 +79,24 @@ class DrawableObject {
 
   /**
    * Determines whether this object should have a debug frame drawn around it.
-   * Override in subclasses to enable debug rendering.
+   * Returns true for specific classes when debug mode is enabled, otherwise false.
    *
-   * @returns {boolean} Always returns false by default.
+   * @returns {boolean} True if the object should have a debug frame, false otherwise.
    */
   isDebugFrameTarget() {
-    return false;
-    // return (
-    //   this instanceof Coin ||
-    //   this instanceof Bottle ||
-    //   this instanceof Character ||
-    //   this instanceof ThrowableBottle ||
-    //   this instanceof Chicken ||
-    //   this instanceof SmallChicken ||
-    //   this instanceof Endboss
-    // );
+    if (this.debugMode) {
+      return (
+        this instanceof Coin ||
+        this instanceof Bottle ||
+        this instanceof Character ||
+        this instanceof ThrowableBottle ||
+        this instanceof Chicken ||
+        this instanceof SmallChicken ||
+        this instanceof Endboss
+      );
+    } else {
+      return false;
+    }
   }
 
   /**

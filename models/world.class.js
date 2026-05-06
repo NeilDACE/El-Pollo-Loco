@@ -150,7 +150,7 @@ class World {
       return;
     }
     const endboss = this.getEndboss();
-    if (endboss && endboss.isDead() && this.checkFinishSection()) {
+    if (this.checkFinishSection()) {
       this.endGame(true);
       this.soundManager.stopAll();
       this.soundManager.play("win");

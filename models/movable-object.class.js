@@ -174,17 +174,17 @@ class MovableObject extends DrawableObject {
   /**
    * Checks whether the object was recently hit.
    *
-   * @returns {boolean} True if the object was hit within the last 1000ms.
+   * @returns {boolean} True if the object was hit within the last 500ms.
    */
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
-    return timePassed < 750;
+    return timePassed < 500;
   }
 
   /**
    * Checks whether a throw action was recently performed.
    *
-   * @returns {boolean} True if a throw occurred within the last 1000ms.
+   * @returns {boolean} True if a throw occurred within the last 750ms.
    */
   isThrown() {
     let timePassed = new Date().getTime() - this.lastThrow;

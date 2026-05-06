@@ -14,7 +14,7 @@ class Character extends MovableObject {
   currentState = "";
   offset = {
     top: 130,
-    left: 25,
+    left: 55,
     right: 45,
     bottom: 15,
   };
@@ -271,7 +271,7 @@ class Character extends MovableObject {
 
   /**
    * Returns the appropriate idle animation state based on how long the character
-   * has been idle. Switches to long-idle after 15 seconds.
+   * has been idle. Switches to long-idle after 7.5 seconds.
    *
    * @returns {{ nextState: string, nextImages: string[], nextRate: number }}
    */
@@ -279,7 +279,7 @@ class Character extends MovableObject {
     if (this.idleStartedAt === null) {
       this.idleStartedAt = Date.now();
     }
-    const isLongIdle = Date.now() - this.idleStartedAt >= 15000;
+    const isLongIdle = Date.now() - this.idleStartedAt >= 7500;
     return {
       nextState: isLongIdle ? "idle_long" : "idle",
       nextImages: isLongIdle ? this.IMAGES_IDLE_LONG : this.IMAGES_IDLE,
