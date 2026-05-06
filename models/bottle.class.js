@@ -3,8 +3,8 @@
  * Extends {@link MovableObject}.
  */
 class Bottle extends MovableObject {
-  width = 40;
-  height = 40;
+  width = 50;
+  height = 50;
   x = 200;
   y = 365;
   offset = {

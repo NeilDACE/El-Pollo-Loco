@@ -94,6 +94,7 @@ function createLevel1() {
       new backgroundObject("img/5_background/layers/3_third_layer/1.png", 0),
       new backgroundObject("img/5_background/layers/2_second_layer/1.png", 0),
       new backgroundObject("img/5_background/layers/1_first_layer/1.png", 0),
+      new backgroundObject("img/5_background/Sign.png", 555, 300, 176, 96),
       new backgroundObject("img/5_background/layers/air.png", 719),
       new backgroundObject("img/5_background/layers/3_third_layer/2.png", 719),
       new backgroundObject("img/5_background/layers/2_second_layer/2.png", 719),

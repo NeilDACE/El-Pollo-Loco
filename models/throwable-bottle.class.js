@@ -3,9 +3,9 @@
  * Extends {@link ThrowableObject}.
  */
 class ThrowableBottle extends ThrowableObject {
-  width = 40;
-  height = 40;
-  groundOffset = 10;
+  width = 50;
+  height = 50;
+  groundOffset = 20;
   IMAGES_ROTATE = [
     "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
     "img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
