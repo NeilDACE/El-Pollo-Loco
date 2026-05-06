@@ -254,7 +254,7 @@ button img {
   }
 }
 
-@media only screen and (max-width: 720px), (orientation: portrait) {
+@media only screen and (max-width: 650px), (orientation: portrait) {
   .orientation-warning {
     display: flex;
   }
