@@ -142,17 +142,17 @@ class World {
    * Checks whether the character or the endboss has fulfilled a win/loss condition
    * and triggers the appropriate end-game state.
    */
-  checkGameEnd() {
+  async checkGameEnd() {
     if (this.character.isDead()) {
       this.endGame(false);
-      this.soundManager.stopAll();
+      await this.soundManager.stopAll();
       this.soundManager.play("gameOver");
       return;
     }
     const endboss = this.getEndboss();
     if (this.checkFinishSection()) {
       this.endGame(true);
-      this.soundManager.stopAll();
+      await this.soundManager.stopAll();
       this.soundManager.play("win");
     }
   }
