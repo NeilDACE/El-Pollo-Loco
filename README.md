@@ -4,6 +4,10 @@ A 2D side-scrolling browser game built with HTML5 Canvas and vanilla JavaScript.
 
 ## Overview
 In this game you control Pepe, fight waves of chickens, collect coins and bottles, buy ammo, and defeat the end boss.
+📸 Screenshots
+
+<img width="1518" height="837" alt="Screenshot 2026-05-27 112344" src="https://github.com/user-attachments/assets/9ab69b5f-9fe2-4cfc-8fd6-bd0cafb5af0e" />
+<img width="1223" height="746" alt="el-pollo-loco screenshot" src="https://github.com/user-attachments/assets/c43298a6-b3c8-4eb1-8a3f-a848fed692e7" />
 
 ## Features
 - Canvas-based side-scroller gameplay
