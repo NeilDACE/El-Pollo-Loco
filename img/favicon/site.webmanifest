@@ -1,8 +1,8 @@
 {
   "name": "El Pollo Loco",
   "short_name": "PolloLoco",
-  "start_url": "/projects/el_pollo_loco/index.html",
-  "scope": "/",
+  "start_url": "../../index.html",
+  "scope": "../../",
   "icons": [
     {
       "src": "android-chrome-192x192.png",

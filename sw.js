@@ -13,7 +13,7 @@ const CORE_ASSETS = [
   "./pages/legal-notice.html",
   "./styles/legal-notice.css",
   "./styles/fonts.css",
-  "./favicon/site.webmanifest",
+  "./img/favicon/site.webmanifest",
 ];
 
 /**
